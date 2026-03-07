@@ -1,0 +1,646 @@
+@import "tailwindcss";
+
+:root {
+  /* Primary healthcare palette (as per provided setup) */
+  --medical-primary-blue: #00A3A5; /* Kelly Green */
+  --medical-dark-blue: #015D67; /* Forest Green */
+  --medical-light-blue: #72C4BD; /* Mint */
+  --medical-very-light-bg: #E9F2F3; /* G8 */
+  --medical-bg-base: #FAFCFC; /* G2 */
+  --medical-soft-surface: #F0F5F6; /* G5 */
+
+  /* Secondary and accent */
+  --medical-accent-green: #AFCFC1; /* Pistachio */
+  --medical-soft-green: #D5E4E6; /* G16 */
+  --medical-teal: #3F6C75; /* G88 */
+
+  /* Neutral palette */
+  --medical-white: #FFFFFF;
+  --medical-light-gray: #F1F5F9;
+  --medical-text-white: #FFFFFF;
+  --medical-text-gray: #475569;
+  --medical-dark-text: #0F172A;
+  --medical-text-on-dark: #FFFFFF;
+
+  /* App-level semantic tokens */
+  --background: var(--medical-bg-base);
+  --foreground: var(--medical-dark-text);
+  --surface: var(--medical-very-light-bg);
+  --muted-surface: var(--medical-soft-surface);
+  --muted-text: var(--medical-text-gray);
+
+  /* Typography scale - mobile first */
+  --fs-hero: 2rem; /* 32px */
+  --fs-section: 1.5rem; /* 24px */
+  --fs-subheading: 1.125rem; /* 18px */
+  --fs-paragraph: 0.875rem; /* 14px */
+  --fs-small: 0.75rem; /* 12px */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-muted-surface: var(--muted-surface);
+  --color-muted-text: var(--muted-text);
+
+  --color-primary: var(--medical-primary-blue);
+  --color-primary-dark: var(--medical-dark-blue);
+  --color-primary-light: var(--medical-light-blue);
+
+  --color-accent: var(--medical-accent-green);
+  --color-accent-soft: var(--medical-soft-green);
+  --color-teal: var(--medical-teal);
+
+  --color-heading: var(--medical-dark-text);
+  --color-primary-button-hover: var(--medical-dark-blue);
+  --color-secondary-button-hover: #76A3A7;
+
+  --color-medical-primary-blue: var(--medical-primary-blue);
+  --color-medical-dark-blue: var(--medical-dark-blue);
+  --color-medical-light-blue: var(--medical-light-blue);
+  --color-medical-very-light-bg: var(--medical-very-light-bg);
+  --color-medical-accent-green: var(--medical-accent-green);
+  --color-medical-soft-green: var(--medical-soft-green);
+  --color-medical-teal: var(--medical-teal);
+  --color-medical-white: var(--medical-white);
+  --color-medical-light-gray: var(--medical-light-gray);
+  --color-medical-text-white: var(--medical-text-white);
+  --color-medical-text-gray: var(--medical-text-gray);
+  --color-medical-dark-text: var(--medical-dark-text);
+  --color-medical-text-on-dark: var(--medical-text-on-dark);
+
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-poppins);
+  --font-mono: var(--font-fallback-mono);
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), "Segoe UI", sans-serif;
+  font-size: var(--fs-paragraph);
+  line-height: 1.6;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--medical-primary-blue) var(--medical-light-gray);
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--medical-light-gray);
+}
+
+*::-webkit-scrollbar-thumb {
+  border: 2px solid var(--medical-light-gray);
+  border-radius: 9999px;
+  background: var(--medical-primary-blue);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--medical-dark-blue);
+}
+
+.page-transition-enter {
+  animation: page-enter 0.32s cubic-bezier(0.2, 0.7, 0, 1);
+  will-change: opacity, transform;
+}
+
+.process-loop-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: process-loop var(--process-duration, 30s) linear infinite;
+}
+
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes process-loop {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition-enter {
+    animation: none;
+  }
+
+  .process-loop-track {
+    animation: none;
+  }
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-poppins), "Segoe UI", sans-serif;
+  color: var(--medical-dark-text);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: var(--fs-hero);
+}
+
+h2 {
+  font-size: var(--fs-section);
+}
+
+h3 {
+  font-size: var(--fs-subheading);
+}
+
+p {
+  color: var(--medical-text-gray);
+  font-size: var(--fs-paragraph);
+}
+
+small {
+  font-size: var(--fs-small);
+  color: var(--medical-text-gray);
+}
+
+/* Dark gradient sections: force white/soft-white readable typography */
+:where(section, div)[class*="from-primary"][class*="to-primary-dark"],
+:where(section, div)[class*="from-primary-dark"][class*="to-teal"],
+:where(section, div)[class*="from-primary"][class*="to-teal"] {
+  color: var(--medical-text-white);
+}
+
+:where(section, div)[class*="from-primary"][class*="to-primary-dark"] :is(h1, h2, h3, h4, h5, h6),
+:where(section, div)[class*="from-primary-dark"][class*="to-teal"] :is(h1, h2, h3, h4, h5, h6),
+:where(section, div)[class*="from-primary"][class*="to-teal"] :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--medical-text-white);
+}
+
+:where(section, div)[class*="from-primary"][class*="to-primary-dark"] :is(p, li, small),
+:where(section, div)[class*="from-primary-dark"][class*="to-teal"] :is(p, li, small),
+:where(section, div)[class*="from-primary"][class*="to-teal"] :is(p, li, small) {
+  color: var(--medical-text-on-dark);
+}
+
+.btn-primary {
+  background-color: var(--medical-primary-blue);
+  color: var(--medical-white);
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--medical-dark-blue);
+}
+
+.btn-secondary {
+  background-color: var(--medical-accent-green);
+  color: var(--medical-white);
+  transition: background-color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #76A3A7;
+}
+
+.section-hero {
+  background: linear-gradient(
+    135deg,
+    var(--medical-dark-blue) 0%,
+    var(--medical-primary-blue) 55%,
+    var(--medical-light-blue) 100%
+  );
+}
+
+.hero-premium {
+  background:
+    radial-gradient(circle at 12% 20%, rgba(255, 255, 255, 0.14), transparent 34%),
+    radial-gradient(circle at 88% 82%, rgba(114, 196, 189, 0.24), transparent 40%),
+    linear-gradient(
+      135deg,
+      var(--medical-dark-blue) 0%,
+      var(--medical-primary-blue) 55%,
+      var(--medical-light-blue) 100%
+    );
+}
+
+.hero-premium h1,
+.hero-premium h2,
+.hero-premium p {
+  color: var(--medical-white);
+}
+
+.hero-title {
+  text-wrap: balance;
+  max-width: 15ch;
+  line-height: 1.06;
+}
+
+.hero-type-target {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  white-space: nowrap;
+  border-right: 2px solid rgba(255, 255, 255, 0.95);
+  width: 0;
+  animation:
+    hero-type 3.4s steps(20, end) infinite,
+    hero-caret 0.8s step-end infinite;
+}
+
+.hero-heading-type {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  white-space: nowrap;
+  border-right: 2px solid rgba(255, 255, 255, 0.95);
+  width: 12ch;
+  will-change: width;
+  animation:
+    hero-heading-type-loop 4.2s steps(12, end) infinite,
+    hero-heading-caret 0.85s step-end infinite;
+}
+
+.hero-command-panel {
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%),
+    radial-gradient(circle at 84% 18%, rgba(96, 165, 250, 0.3), transparent 38%);
+}
+
+.hero-doctor-scene {
+  position: relative;
+}
+
+.hero-doctor-avatar {
+  display: inline-flex;
+  height: 3rem;
+  width: 3rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(114, 196, 189, 0.95), rgba(0, 163, 165, 0.95));
+  box-shadow: 0 8px 22px rgba(0, 163, 165, 0.3);
+}
+
+.hero-floating-chip {
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.16);
+  padding: 0.45rem 0.75rem;
+  color: var(--medical-white);
+  font-size: 0.72rem;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+  animation: hero-float 7s ease-in-out infinite;
+}
+
+.hero-floating-chip-a {
+  left: 7%;
+  top: 20%;
+}
+
+.hero-floating-chip-b {
+  right: 8%;
+  top: 16%;
+  animation-delay: -2.2s;
+}
+
+.hero-floating-chip-c {
+  right: 12%;
+  bottom: 10%;
+  animation-delay: -1.1s;
+}
+
+.hero-metric-box {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.8rem;
+}
+
+@keyframes hero-type {
+  0%,
+  12% {
+    width: 0;
+  }
+  45%,
+  72% {
+    width: 19ch;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes hero-caret {
+  0%,
+  50% {
+    border-right-color: rgba(255, 255, 255, 0.95);
+  }
+  51%,
+  100% {
+    border-right-color: transparent;
+  }
+}
+
+@keyframes hero-heading-type-loop {
+  0%,
+  14% {
+    width: 0;
+  }
+  45%,
+  72% {
+    width: 12ch;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes hero-heading-caret {
+  0%,
+  50% {
+    border-right-color: rgba(255, 255, 255, 0.95);
+  }
+  51%,
+  100% {
+    border-right-color: transparent;
+  }
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.section-services {
+  background-color: var(--medical-white);
+}
+
+.section-about {
+  background-color: var(--medical-very-light-bg);
+}
+
+.section-process {
+  background-color: var(--medical-white);
+}
+
+.section-testimonials {
+  background-color: var(--medical-light-gray);
+}
+
+.section-cta {
+  background: linear-gradient(
+    120deg,
+    var(--medical-primary-blue) 0%,
+    var(--medical-dark-blue) 100%
+  );
+}
+
+.icon-medical {
+  color: var(--medical-primary-blue);
+}
+
+@keyframes laser-flow-a {
+  0% {
+    transform: translateY(-35%) translateX(-140%) rotate(-12deg);
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: translateY(35%) translateX(140%) rotate(-12deg);
+    opacity: 0.15;
+  }
+}
+
+@keyframes laser-flow-b {
+  0% {
+    transform: translateY(-30%) translateX(-40%) rotate(12deg);
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.62;
+  }
+  100% {
+    transform: translateY(30%) translateX(120%) rotate(12deg);
+    opacity: 0.15;
+  }
+}
+
+@keyframes laser-flow-c {
+  0% {
+    transform: translateY(-35%) translateX(40%) rotate(-6deg);
+    opacity: 0.12;
+  }
+  50% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateY(35%) translateX(190%) rotate(-6deg);
+    opacity: 0.12;
+  }
+}
+
+@keyframes smoke-rise {
+  0% {
+    opacity: 0.28;
+    transform: translateX(-50%) translateY(0) scale(0.95);
+  }
+  50% {
+    opacity: 0.54;
+    transform: translateX(-50%) translateY(-8px) scale(1.05);
+  }
+  100% {
+    opacity: 0.28;
+    transform: translateX(-50%) translateY(0) scale(0.95);
+  }
+}
+
+.laser-bg-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.22), transparent 38%),
+    radial-gradient(circle at 82% 82%, rgba(175, 207, 193, 0.25), transparent 42%),
+    radial-gradient(circle at 50% 45%, rgba(114, 196, 189, 0.2), transparent 48%);
+}
+
+.laser-smoke {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  z-index: 1;
+  width: min(55vw, 580px);
+  height: 180px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(213, 228, 230, 0.45), rgba(1, 93, 103, 0) 74%);
+  filter: blur(11px);
+}
+
+.laser-smoke-a {
+  animation: smoke-rise 6s ease-in-out infinite;
+}
+
+.laser-smoke-b {
+  animation: smoke-rise 8.5s ease-in-out infinite reverse;
+}
+
+.laser-beam {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 140%;
+  border-radius: 9999px;
+  filter: blur(12px);
+}
+
+.laser-beam-a {
+  width: 3rem;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--medical-light-blue) 64%, white),
+    transparent
+  );
+  animation: laser-flow-a 9s linear infinite;
+}
+
+.laser-beam-b {
+  width: 2.5rem;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--medical-primary-blue) 70%, white),
+    transparent
+  );
+  animation: laser-flow-b 11s linear infinite;
+}
+
+.laser-beam-c {
+  width: 2rem;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--medical-accent-green) 55%, white),
+    transparent
+  );
+  animation: laser-flow-c 8s linear infinite;
+}
+
+.laser-fade-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(1, 93, 103, 0.26) 0%,
+    rgba(0, 163, 165, 0.18) 38%,
+    rgba(0, 163, 165, 0.08) 100%
+  );
+}
+
+@media (max-width: 1023px) {
+  .hero-title {
+    margin-inline: auto;
+    max-width: 100%;
+    line-height: 1.12;
+  }
+
+  .hero-command-panel {
+    text-align: left;
+  }
+
+  .hero-floating-chip {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-premium {
+    padding-top: 0.2rem;
+  }
+
+  .hero-command-panel {
+    padding: 1.1rem;
+  }
+
+  .hero-type-target {
+    width: auto;
+    animation: none;
+    border-right: 0;
+    white-space: normal;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-type-target {
+    width: auto;
+    animation: none;
+    border-right: 0;
+    white-space: normal;
+  }
+
+  .hero-heading-type {
+    width: auto;
+    animation: none;
+    border-right: 0;
+    white-space: normal;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --fs-hero: 2.5rem; /* 40px */
+    --fs-section: 1.875rem; /* 30px */
+    --fs-subheading: 1.25rem; /* 20px */
+    --fs-paragraph: 0.9375rem; /* 15px */
+    --fs-small: 0.8125rem; /* 13px */
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --fs-hero: 3rem; /* 48px */
+    --fs-section: 2.25rem; /* 36px */
+    --fs-subheading: 1.5rem; /* 24px */
+    --fs-paragraph: 1rem; /* 16px */
+    --fs-small: 0.875rem; /* 14px */
+  }
+}
