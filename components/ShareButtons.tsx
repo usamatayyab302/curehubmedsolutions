@@ -1,22 +1,18 @@
 "use client";
 
-import { Check, Copy, Facebook, Linkedin, MessageCircleMore, Twitter } from "lucide-react";
+import { Check, Copy, Facebook, Linkedin, Twitter } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type ShareButtonsProps = {
   title: string;
   url: string;
+  className?: string;
 };
 
 const shareTargets = [
-  {
-    label: "Twitter / X",
-    icon: Twitter,
-    getUrl: (url: string, title: string) =>
-      `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
-  },
   {
     label: "LinkedIn",
     icon: Linkedin,
@@ -30,14 +26,14 @@ const shareTargets = [
       `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
   },
   {
-    label: "WhatsApp",
-    icon: MessageCircleMore,
+    label: "Twitter / X",
+    icon: Twitter,
     getUrl: (url: string, title: string) =>
-      `https://api.whatsapp.com/send?text=${encodeURIComponent(`${title} ${url}`)}`,
+      `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
   },
 ];
 
-export default function ShareButtons({ title, url }: ShareButtonsProps) {
+export default function ShareButtons({ title, url, className }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
 
   async function copyLink() {
@@ -47,7 +43,7 @@ export default function ShareButtons({ title, url }: ShareButtonsProps) {
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className={cn("flex flex-wrap gap-2", className)}>
       {shareTargets.map((target) => {
         const Icon = target.icon;
 

@@ -5,7 +5,13 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { TableOfContentsItem } from "@/lib/markdown";
 
-export default function TableOfContents({ items }: { items: TableOfContentsItem[] }) {
+export default function TableOfContents({
+  items,
+  sticky = true,
+}: {
+  items: TableOfContentsItem[];
+  sticky?: boolean;
+}) {
   const [activeId, setActiveId] = useState<string | null>(items[0]?.id ?? null);
 
   useEffect(() => {
@@ -43,7 +49,12 @@ export default function TableOfContents({ items }: { items: TableOfContentsItem[
   }
 
   return (
-    <div className="rounded-[1.5rem] border border-primary/10 bg-white p-5 shadow-sm lg:sticky lg:top-24">
+    <div
+      className={cn(
+        "rounded-[1.5rem] border border-primary/10 bg-white p-5 shadow-sm",
+        sticky && "lg:sticky lg:top-24"
+      )}
+    >
       <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
         Table of Contents
       </h2>

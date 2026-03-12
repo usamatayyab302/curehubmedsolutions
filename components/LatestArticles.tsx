@@ -5,6 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { PostSummary } from "@/lib/posts";
 
 export default function LatestArticles({ posts }: { posts: PostSummary[] }) {
+  if (posts.length === 0) {
+    return null;
+  }
+
   return (
     <Card className="overflow-hidden">
       <CardHeader>

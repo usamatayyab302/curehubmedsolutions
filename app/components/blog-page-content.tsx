@@ -75,54 +75,67 @@ export default function BlogPageContent() {
               </div>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
-              {filtered.map((post, index) => (
-                <motion.div
-                  key={post.slug}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ delay: index * 0.06 }}
-                >
-                  <Card className="h-full border-primary/15 bg-white/85 transition-all hover:-translate-y-1 hover:shadow-lg">
-                    <CardHeader>
-                      <p className="m-0 text-xs font-semibold uppercase tracking-[0.1em] text-primary">
-                        {post.category}
-                      </p>
-                      <CardTitle className="text-xl">{post.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="pt-0">
-                      <p className="text-sm leading-relaxed text-muted-text">{post.excerpt}</p>
-                      <p className="mt-3 text-xs text-muted-text">{post.date}</p>
-                      <Link
-                        href="/contact-us"
-                        className="mt-4 inline-flex items-center text-sm font-semibold text-primary hover:text-primary-dark"
-                      >
-                        Read more
-                        <ArrowUpRight className="ml-1 h-4 w-4" />
-                      </Link>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
+            {filtered.length > 0 ? (
+              <div className="grid gap-4 md:grid-cols-2">
+                {filtered.map((post, index) => (
+                  <motion.div
+                    key={post.slug}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ delay: index * 0.06 }}
+                  >
+                    <Card className="h-full border-primary/15 bg-white/85 transition-all hover:-translate-y-1 hover:shadow-lg">
+                      <CardHeader>
+                        <p className="m-0 text-xs font-semibold uppercase tracking-[0.1em] text-primary">
+                          {post.category}
+                        </p>
+                        <CardTitle className="text-xl">{post.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent className="pt-0">
+                        <p className="text-sm leading-relaxed text-muted-text">{post.excerpt}</p>
+                        <p className="mt-3 text-xs text-muted-text">{post.date}</p>
+                        <Link
+                          href="/contact-us"
+                          className="mt-4 inline-flex items-center text-sm font-semibold text-primary hover:text-primary-dark"
+                        >
+                          Read more
+                          <ArrowUpRight className="ml-1 h-4 w-4" />
+                        </Link>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <Card className="border-primary/15 bg-white/85">
+                <CardContent className="p-6 text-center">
+                  <h2 className="text-xl font-semibold text-heading">No blog posts available</h2>
+                  <p className="mt-2 text-sm text-muted-text">
+                    Add new articles when editorial content is ready to publish.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
           </div>
 
-          <aside>
-            <Card className="border-primary/15 bg-white/90">
-              <CardHeader>
-                <CardTitle>Recent Posts</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 pt-0">
-                {recent.map((post) => (
-                  <div key={post.slug} className="border-b border-primary/10 pb-3 last:border-0">
-                    <p className="m-0 text-sm font-semibold text-heading">{post.title}</p>
-                    <p className="m-0 mt-1 text-xs text-muted-text">{post.date}</p>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          </aside>
+          {recent.length > 0 ? (
+            <aside>
+              <Card className="border-primary/15 bg-white/90">
+                <CardHeader>
+                  <CardTitle>Recent Posts</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 pt-0">
+                  {recent.map((post) => (
+                    <div key={post.slug} className="border-b border-primary/10 pb-3 last:border-0">
+                      <p className="m-0 text-sm font-semibold text-heading">{post.title}</p>
+                      <p className="m-0 mt-1 text-xs text-muted-text">{post.date}</p>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </aside>
+          ) : null}
         </div>
       </section>
     </div>

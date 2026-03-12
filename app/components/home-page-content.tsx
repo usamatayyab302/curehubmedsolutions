@@ -1446,91 +1446,99 @@ export default function HomePageContent({
         </div>
       </section>
 
-      <section
-        id="latest-posts"
-        className="border-t border-primary/10 bg-medical-very-light-bg px-4 py-14 sm:px-6 lg:px-8 lg:py-16"
-      >
-        <div className="mx-auto max-w-7xl">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="m-0 text-xs font-semibold uppercase tracking-[0.12em] text-primary">
-              Latest Posts
-            </p>
-            <h2 className="mt-3 font-heading text-3xl font-bold leading-tight text-heading sm:text-4xl">
-              Latest Articles
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-muted-text sm:text-base">
-              Explore the latest insights on medical billing, revenue cycle management, and
-              healthcare operations.
-            </p>
-          </div>
+      {latestPosts.length > 0 ? (
+        <section
+          id="latest-posts"
+          className="border-t border-primary/10 bg-medical-very-light-bg px-4 py-14 sm:px-6 lg:px-8 lg:py-16"
+        >
+          <div className="mx-auto max-w-7xl">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="m-0 text-xs font-semibold uppercase tracking-[0.12em] text-primary">
+                Latest Posts
+              </p>
+              <h2 className="mt-3 font-heading text-3xl font-bold leading-tight text-heading sm:text-4xl">
+                Latest Articles
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-muted-text sm:text-base">
+                Explore the latest insights on medical billing, revenue cycle management, and
+                healthcare operations.
+              </p>
+            </div>
 
-          <motion.div
-            variants={serviceContainerVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
-            className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
-          >
-            {latestPosts.map((post) => (
-              <motion.article key={post.slug} variants={serviceItemVariants} whileHover={{ y: -6 }}>
-                <Card className="group h-full overflow-hidden border-primary/10 transition-[transform,box-shadow] duration-300 hover:shadow-xl hover:shadow-primary/10">
-                  <Link href={`/blog/${post.slug}`} className="block">
-                    <div className="relative aspect-[16/10] overflow-hidden">
-                      <Image
-                        src={post.image}
-                        alt={post.title}
-                        fill
-                        sizes="(min-width: 1280px) 25vw, (min-width: 768px) 40vw, 100vw"
-                        className="object-cover transition duration-500 group-hover:scale-105"
-                      />
-                    </div>
-                  </Link>
-                  <CardContent className="p-6">
-                    <Badge className="mb-3">{post.category}</Badge>
+            <motion.div
+              variants={serviceContainerVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
+            >
+              {latestPosts.map((post) => (
+                <motion.article
+                  key={post.slug}
+                  variants={serviceItemVariants}
+                  whileHover={{ y: -6 }}
+                >
+                  <Card className="group h-full overflow-hidden border-primary/10 transition-[transform,box-shadow] duration-300 hover:shadow-xl hover:shadow-primary/10">
                     <Link href={`/blog/${post.slug}`} className="block">
-                      <h3 className="text-xl font-semibold text-heading transition-colors group-hover:text-primary">
-                        {post.title}
-                      </h3>
+                      <div className="relative aspect-[16/10] overflow-hidden">
+                        <Image
+                          src={post.image}
+                          alt={post.title}
+                          fill
+                          sizes="(min-width: 1280px) 25vw, (min-width: 768px) 40vw, 100vw"
+                          className="object-cover transition duration-500 group-hover:scale-105"
+                        />
+                      </div>
                     </Link>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-text">{post.description}</p>
-                    <div className="mt-4 flex flex-wrap gap-3 text-xs text-muted-text">
-                      <span className="inline-flex items-center gap-1.5">
-                        <CalendarDays className="h-3.5 w-3.5" />
-                        {new Date(post.date).toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                          year: "numeric",
-                        })}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <Clock3 className="h-3.5 w-3.5" />
-                        {post.readingTime}
-                      </span>
-                    </div>
-                    <div className="mt-5">
-                      <Button asChild variant="outline" size="sm">
-                        <Link href={`/blog/${post.slug}`}>
-                          Read Article
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.article>
-            ))}
-          </motion.div>
+                    <CardContent className="p-6">
+                      <Badge className="mb-3">{post.category}</Badge>
+                      <Link href={`/blog/${post.slug}`} className="block">
+                        <h3 className="text-xl font-semibold text-heading transition-colors group-hover:text-primary">
+                          {post.title}
+                        </h3>
+                      </Link>
+                      <p className="mt-3 text-sm leading-relaxed text-muted-text">
+                        {post.description}
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-3 text-xs text-muted-text">
+                        <span className="inline-flex items-center gap-1.5">
+                          <CalendarDays className="h-3.5 w-3.5" />
+                          {new Date(post.date).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          })}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5">
+                          <Clock3 className="h-3.5 w-3.5" />
+                          {post.readingTime}
+                        </span>
+                      </div>
+                      <div className="mt-5">
+                        <Button asChild variant="outline" size="sm">
+                          <Link href={`/blog/${post.slug}`}>
+                            Read Article
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </Link>
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.article>
+              ))}
+            </motion.div>
 
-          <div className="mt-8 flex justify-center">
-            <Button asChild size="sm">
-              <Link href="/blog">
-                View All Posts
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+            <div className="mt-8 flex justify-center">
+              <Button asChild size="sm">
+                <Link href="/blog">
+                  View All Posts
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <section
         id="faq"

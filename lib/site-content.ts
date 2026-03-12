@@ -282,45 +282,12 @@ export const faqsGeneral = [
   },
 ];
 
-export const blogPosts = [
-  {
-    title: "How to Reduce Claim Denials in High-Volume Practices",
-    slug: "reduce-claim-denials",
-    category: "Denial Management",
-    excerpt:
-      "Practical steps to reduce first-pass denials using eligibility checks, coding QA, and payer-specific submission rules.",
-    date: "March 1, 2026",
-  },
-  {
-    title: "Credentialing Timelines: What Delays Enrollment and How to Avoid It",
-    slug: "credentialing-timelines",
-    category: "Credentialing",
-    excerpt:
-      "Common enrollment bottlenecks and process controls that speed up provider credentialing and re-credentialing.",
-    date: "February 22, 2026",
-  },
-  {
-    title: "AR Recovery Playbook for Independent Clinics",
-    slug: "ar-recovery-playbook",
-    category: "AR Recovery",
-    excerpt:
-      "A focused AR recovery framework to prioritize aged claims, improve appeal outcomes, and restore lost revenue.",
-    date: "February 14, 2026",
-  },
-  {
-    title: "Revenue Cycle KPIs Every Medical Practice Should Track Monthly",
-    slug: "revenue-cycle-kpis",
-    category: "Revenue Cycle Management",
-    excerpt:
-      "Key performance metrics that reveal billing efficiency, denial trends, and payer reimbursement performance.",
-    date: "January 30, 2026",
-  },
-  {
-    title: "Front Office Best Practices That Protect Clean Claim Rates",
-    slug: "front-office-clean-claims",
-    category: "Front Office",
-    excerpt:
-      "Why registration accuracy, verification workflows, and authorization discipline are critical to clean claim rates.",
-    date: "January 19, 2026",
-  },
-];
+export type BlogPostPreview = {
+  title: string;
+  slug: string;
+  category: string;
+  excerpt: string;
+  date: string;
+};
+
+export const blogPosts: BlogPostPreview[] = [];

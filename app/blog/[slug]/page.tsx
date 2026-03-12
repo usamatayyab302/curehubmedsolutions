@@ -2,13 +2,16 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import AuthorBox from "@/components/AuthorBox";
 import BlogHero from "@/components/BlogHero";
-import BlogSidebar from "@/components/BlogSidebar";
+import BlogPostSidebar from "@/components/BlogPostSidebar";
+import { createMedicalBillingGuideSlots } from "@/components/MedicalBillingGuideBlocks";
 import ReadingProgress from "@/components/ReadingProgress";
-import ShareButtons from "@/components/ShareButtons";
+import RelatedArticlesSection from "@/components/RelatedArticlesSection";
+import RichArticleContent from "@/components/RichArticleContent";
+import MotionReveal from "@/components/services/motion-reveal";
 import TableOfContents from "@/components/TableOfContents";
 import {
-  getCategorySummaries,
   getLatestPosts,
   getPostBySlug,
   getPostSlugs,
@@ -35,26 +38,47 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 
   const url = `${getSiteUrl()}/blog/${post.slug}`;
+  const ogImage = post.image.startsWith("http") ? post.image : `${getSiteUrl()}${post.image}`;
+  const metaTitle = post.seoTitle ?? post.title;
+  const metaDescription = post.seoDescription ?? post.description;
 
   return {
-    title: post.title,
-    description: post.description,
+    title: metaTitle,
+    description: metaDescription,
     alternates: {
       canonical: url,
     },
     openGraph: {
-      title: post.title,
-      description: post.description,
+      title: metaTitle,
+      description: metaDescription,
       url,
       type: "article",
       images: [
         {
-          url: post.image,
-          alt: post.title,
+          url: ogImage,
+          alt: post.imageAlt ?? post.title,
         },
       ],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: metaTitle,
+      description: metaDescription,
+      images: [ogImage],
+    },
   };
+}
+
+function getArticleBody(markdown: string) {
+  return markdown
+    .replace(/\[\[[^\]]+\]\]/g, "")
+    .replace(/!\[[^\]]*]\([^)]+\)/g, "")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/[*_`>|-]/g, " ")
+    .replace(/\n+/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
@@ -66,12 +90,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const postUrl = `${getSiteUrl()}/blog/${post.slug}`;
+  const postImage = post.image.startsWith("http") ? post.image : `${getSiteUrl()}${post.image}`;
+  const metaDescription = post.seoDescription ?? post.description;
+  const latestPosts = getLatestPosts(4, post.slug);
   const relatedPosts = getRelatedPosts(post, 3);
+  const articleSlots =
+    post.slug === "complete-guide-to-medical-billing"
+      ? createMedicalBillingGuideSlots()
+      : {};
   const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     headline: post.title,
-    image: [post.image],
+    image: [postImage],
     author: {
       "@type": "Person",
       name: post.author,
@@ -81,13 +112,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     publisher: {
       "@type": "Organization",
       name: "Cure Hub Med Solutions",
+      url: getSiteUrl(),
     },
-    description: post.description,
+    description: metaDescription,
+    articleBody: getArticleBody(post.content),
     mainEntityOfPage: postUrl,
   };
 
   return (
-    <div className="pb-16">
+    <div className="overflow-hidden bg-[radial-gradient(circle_at_top,rgba(114,196,189,0.14),transparent_28%),linear-gradient(180deg,#f8fbfb_0%,#ffffff_35%,#f6fbfb_100%)] pb-20">
       <ReadingProgress />
       <BlogHero
         variant="post"
@@ -97,40 +130,50 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         date={post.date}
         readingTime={post.readingTime}
         category={post.category}
-      >
-        <ShareButtons title={post.title} url={postUrl} />
-      </BlogHero>
+      />
 
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="relative aspect-[16/7] overflow-hidden rounded-[2rem] shadow-[0_24px_80px_rgba(15,23,42,0.15)]">
-          <Image
-            src={post.image}
-            alt={post.title}
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
-          />
-        </div>
-
-        <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_2fr_1fr]">
-          <aside className="order-2 lg:order-1">
-            <TableOfContents items={post.headings} />
-          </aside>
-
-          <article className="order-1 lg:order-2">
-            <div
-              className="blog-prose mx-auto max-w-[720px]"
-              dangerouslySetInnerHTML={{ __html: post.html }}
+        <MotionReveal className="overflow-hidden rounded-[2rem] border border-primary/10 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.12)]">
+          <div className="relative aspect-[16/9] md:aspect-[16/7]">
+            <Image
+              src={post.image}
+              alt={post.imageAlt ?? post.title}
+              fill
+              className="object-cover"
+              priority
+              sizes="100vw"
             />
-          </article>
+            <div className="absolute inset-0 bg-gradient-to-tr from-slate-950/18 via-transparent to-transparent" />
+          </div>
+        </MotionReveal>
 
-          <aside className="order-3 lg:order-3">
-            <BlogSidebar
-              latestPosts={getLatestPosts(4, post.slug)}
-              categories={getCategorySummaries()}
-              relatedPosts={relatedPosts}
-            />
+        <div className="mt-10 grid gap-10 xl:grid-cols-[minmax(0,1fr)_320px]">
+          <main className="min-w-0">
+            <MotionReveal>
+              <TableOfContents items={post.headings} sticky={false} />
+            </MotionReveal>
+
+            <MotionReveal className="mt-8 rounded-[2rem] border border-primary/10 bg-white/96 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.06)] sm:p-8 lg:p-10">
+              <article>
+                <RichArticleContent html={post.html} slots={articleSlots} />
+              </article>
+            </MotionReveal>
+
+            <MotionReveal className="mt-8">
+              <AuthorBox
+                author={post.author}
+                authorRole={post.authorRole}
+                authorBio={post.authorBio}
+              />
+            </MotionReveal>
+
+            <MotionReveal className="mt-10">
+              <RelatedArticlesSection posts={relatedPosts} />
+            </MotionReveal>
+          </main>
+
+          <aside className="xl:sticky xl:top-24 xl:self-start">
+            <BlogPostSidebar latestPosts={latestPosts} title={post.title} url={postUrl} />
           </aside>
         </div>
       </div>

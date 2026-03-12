@@ -9,11 +9,16 @@ import { getReadingTime } from "@/lib/readingTime";
 export type PostFrontmatter = {
   title: string;
   description: string;
+  seoTitle?: string;
+  seoDescription?: string;
   date: string;
   author: string;
+  authorRole?: string;
+  authorBio?: string;
   category: string;
   tags: string[];
   image: string;
+  imageAlt?: string;
   slug: string;
   featured: boolean;
 };
@@ -52,10 +57,11 @@ function parsePostFile(filePath: string): PostSummary & { content: string } {
   const source = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(source);
   const frontmatter = data as PostFrontmatter;
+  const readingContent = content.replace(/\[\[[^\]]+\]\]/g, "");
 
   return {
     ...frontmatter,
-    readingTime: getReadingTime(content),
+    readingTime: getReadingTime(readingContent),
     content,
   };
 }
@@ -69,19 +75,11 @@ export const getAllPosts = cache(() => {
     .readdirSync(POSTS_DIRECTORY)
     .filter((fileName) => fileName.endsWith(".md"))
     .map((fileName) => {
-      const parsed = parsePostFile(path.join(POSTS_DIRECTORY, fileName));
+      const { content, ...parsed } = parsePostFile(path.join(POSTS_DIRECTORY, fileName));
+      void content;
 
       return {
-        title: parsed.title,
-        description: parsed.description,
-        date: parsed.date,
-        author: parsed.author,
-        category: parsed.category,
-        tags: parsed.tags,
-        image: parsed.image,
-        slug: parsed.slug,
-        featured: parsed.featured,
-        readingTime: parsed.readingTime,
+        ...parsed,
       } satisfies PostSummary;
     })
     .sort((left, right) => new Date(right.date).getTime() - new Date(left.date).getTime())
