@@ -6,36 +6,36 @@ import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import {
   ArrowRight,
-  Building,
-  Building2,
-  House,
+  Activity,
+  Ambulance,
   Baby,
   Bone,
   Brain,
   BrainCircuit,
-  CircleDot,
+  Building,
+  Building2,
   ClipboardCheck,
+  Droplets,
+  Eye,
+  FlaskConical,
+  Hand,
   Heart,
+  HeartPulse,
   Hospital,
+  Microscope,
+  Monitor,
+  Moon,
+  Pill,
+  Ribbon,
+  Scan,
   ShieldCheck,
   Sparkles,
   Stethoscope,
   TrendingUp,
-  Users,
-  FlaskConical,
-  Hand,
-  Network,
-  Scan,
-  Droplets,
-  Ribbon,
-  Microscope,
-  Accessibility,
-  Ambulance,
-  BriefcaseMedical,
   UserRound,
-  Pill,
-  Activity,
-  Orbit,
+  Users,
+  Accessibility,
+  BriefcaseMedical,
 } from "lucide-react";
 import {
   Accordion,
@@ -61,56 +61,330 @@ const itemVariants: Variants = {
 };
 
 const specialties: SpecialtyItem[] = [
-  { title: "Chiropractic Billing", icon: Bone, slug: "/specialties/chiropractic-billing", description: "Spine and musculoskeletal claims." },
-  { title: "Mental Health Billing", icon: Brain, slug: "/specialties/mental-health-billing", description: "Behavioral and therapy reimbursement." },
-  { title: "Internal Medicine Billing", icon: Stethoscope, slug: "/specialties/internal-medicine-billing" },
-  { title: "Nephrology Billing", icon: Droplets, slug: "/specialties/nephrology-billing" },
-  { title: "Hospital Billing", icon: Activity, slug: "/specialties/hospital-billing" },
-  { title: "Multi-Specialty Billing", icon: Orbit, slug: "/specialties/multi-specialty-billing" },
-  { title: "Acupuncture Billing", icon: Sparkles, slug: "/specialties/acupuncture-billing" },
-  { title: "Physician Billing", icon: UserRound, slug: "/specialties/physician-billing" },
-  { title: "Sleep Medicine Billing", icon: Pill, slug: "/specialties/sleep-medicine-billing" },
-  { title: "Physical Medicine Billing", icon: Hand, slug: "/specialties/physical-medicine-billing" },
-  { title: "Family Medicine Billing", icon: Users, slug: "/specialties/family-medicine-billing" },
-  { title: "Emergency Medicine Billing", icon: Heart, slug: "/specialties/emergency-medicine-billing" },
-  { title: "Behavioral Health Billing", icon: Brain, slug: "/specialties/behavioral-health-billing" },
-  { title: "Psychiatry Billing", icon: Network, slug: "/specialties/psychiatry-billing" },
-  { title: "Neurology Billing", icon: Network, slug: "/specialties/neurology-billing" },
-  { title: "Urgent Care Billing", icon: ShieldCheck, slug: "/specialties/urgent-care-billing" },
-  { title: "Cardiology Billing", icon: Heart, slug: "/specialties/cardiology-billing" },
-  { title: "Orthopedic Billing", icon: Bone, slug: "/specialties/orthopedic-billing" },
-  { title: "Physical Therapy Billing", icon: Hand, slug: "/specialties/physical-therapy-billing" },
-  { title: "Urology Billing", icon: Droplets, slug: "/specialties/urology-billing" },
-  { title: "Gastroenterology Billing", icon: CircleDot, slug: "/specialties/gastroenterology-billing" },
-  { title: "Speech Pathology Billing", icon: Users, slug: "/specialties/speech-pathology-billing" },
-  { title: "Radiology Billing", icon: Scan, slug: "/specialties/radiology-billing" },
-  { title: "Pediatrics Billing", icon: Baby, slug: "/specialties/pediatrics-billing" },
-  { title: "Dermatology Billing", icon: Hand, slug: "/specialties/dermatology-billing" },
-  { title: "Oncology Billing", icon: Ribbon, slug: "/specialties/oncology-billing" },
-  { title: "Ophthalmology Billing", icon: Orbit, slug: "/specialties/ophthalmology-billing" },
-  { title: "OB/GYN Billing", icon: Baby, slug: "/specialties/ob-gyn-billing" },
-  { title: "Endocrinology Billing", icon: FlaskConical, slug: "/specialties/endocrinology-billing" },
-  { title: "Pulmonology Billing", icon: Activity, slug: "/specialties/pulmonology-billing" },
-  { title: "Rheumatology Billing", icon: Hand, slug: "/specialties/rheumatology-billing" },
-  { title: "Pain Management Billing", icon: ShieldCheck, slug: "/specialties/pain-management-billing" },
-  { title: "Podiatry Billing", icon: Bone, slug: "/specialties/podiatry-billing" },
-  { title: "ENT Billing", icon: Stethoscope, slug: "/specialties/ent-billing" },
-  { title: "Allergy and Immunology Billing", icon: Sparkles, slug: "/specialties/allergy-immunology-billing" },
-  { title: "Infectious Disease Billing", icon: ShieldCheck, slug: "/specialties/infectious-disease-billing" },
-  { title: "Hematology Billing", icon: Droplets, slug: "/specialties/hematology-billing" },
-  { title: "Anesthesiology Billing", icon: Pill, slug: "/specialties/anesthesiology-billing" },
-  { title: "Pathology Billing", icon: Microscope, slug: "/specialties/pathology-billing" },
-  { title: "Plastic Surgery Billing", icon: Sparkles, slug: "/specialties/plastic-surgery-billing" },
-  { title: "General Surgery Billing", icon: ClipboardCheck, slug: "/specialties/general-surgery-billing" },
-  { title: "Home Health Billing", icon: House, slug: "/specialties/home-health-billing" },
-  { title: "Hospice Billing", icon: Heart, slug: "/specialties/hospice-billing" },
-  { title: "Occupational Therapy Billing", icon: Accessibility, slug: "/specialties/occupational-therapy-billing" },
-  { title: "Skilled Nursing Facility Billing", icon: Building2, slug: "/specialties/skilled-nursing-facility-billing" },
-  { title: "DME Billing", icon: BriefcaseMedical, slug: "/specialties/dme-billing" },
-  { title: "Fertility and IVF Billing", icon: Baby, slug: "/specialties/fertility-ivf-billing" },
-  { title: "Dental Billing", icon: Scan, slug: "/specialties/dental-billing" },
-  { title: "Ambulatory Surgery Center Billing", icon: Hospital, slug: "/specialties/ambulatory-surgery-center-billing" },
-  { title: "Telemedicine Billing", icon: Network, slug: "/specialties/telemedicine-billing" },
+  {
+    title: "Family Medicine",
+    icon: Users,
+    slug: "/specialties/family-medicine-billing",
+    description: "Primary care billing support for preventive visits, chronic care, and payer follow-up.",
+  },
+  {
+    title: "Internal Medicine",
+    icon: Stethoscope,
+    slug: "/specialties/internal-medicine-billing",
+    description: "Billing workflows for complex adult medicine encounters and documentation-heavy claims.",
+  },
+  {
+    title: "Cardiology",
+    icon: HeartPulse,
+    slug: "/specialties/cardiology-billing",
+    description: "Cardiology billing services tailored to diagnostics, procedures, and contract-based reimbursement.",
+  },
+  {
+    title: "Orthopedics",
+    icon: Bone,
+    slug: "/specialties/orthopedics-billing",
+    description: "Orthopedic claims management for procedures, therapy coordination, and denial reduction.",
+  },
+  {
+    title: "Neurology",
+    icon: Brain,
+    slug: "/specialties/neurology-billing",
+    description: "Neurology billing support for diagnostic studies, follow-up visits, and specialty coding accuracy.",
+  },
+  {
+    title: "Dermatology",
+    icon: Sparkles,
+    slug: "/specialties/dermatology-billing",
+    description: "Dermatology billing built for office procedures, skin treatments, and payer-specific edits.",
+  },
+  {
+    title: "Gastroenterology",
+    icon: Pill,
+    slug: "/specialties/gastroenterology-billing",
+    description: "Specialty billing for GI consults, endoscopy workflows, and documentation-driven reimbursement.",
+  },
+  {
+    title: "Urology",
+    icon: Droplets,
+    slug: "/specialties/urology-billing",
+    description: "Urology billing services for in-office procedures, diagnostics, and surgical claims.",
+  },
+  {
+    title: "Pulmonology",
+    icon: Activity,
+    slug: "/specialties/pulmonology-billing",
+    description: "Pulmonology revenue cycle support for respiratory testing, chronic care, and payer compliance.",
+  },
+  {
+    title: "Endocrinology",
+    icon: FlaskConical,
+    slug: "/specialties/endocrinology-billing",
+    description: "Focused billing services for endocrine evaluations, monitoring visits, and recurring treatment plans.",
+  },
+  {
+    title: "Pediatrics",
+    icon: Baby,
+    slug: "/specialties/pediatrics-billing",
+    description: "Pediatric billing designed for wellness visits, immunizations, and age-based coding requirements.",
+  },
+  {
+    title: "Urgent Care",
+    icon: Ambulance,
+    slug: "/specialties/urgent-care-billing",
+    description: "High-volume urgent care billing that keeps fast-turnaround claims clean and reimbursement moving.",
+  },
+  {
+    title: "Chiropractic",
+    icon: Bone,
+    slug: "/specialties/chiropractic-billing-services",
+    description: "Chiropractic billing support for spinal adjustments, modifiers, and medical necessity compliance.",
+  },
+  {
+    title: "Mental Health",
+    icon: BrainCircuit,
+    slug: "/specialties/mental-health-billing-services",
+    description: "Behavioral health billing workflows built around authorizations, compliance, and session accuracy.",
+  },
+  {
+    title: "Psychiatry",
+    icon: Brain,
+    slug: "/specialties/psychiatry-billing",
+    description: "Psychiatry billing services for evaluations, medication management, and telepsychiatry encounters.",
+  },
+  {
+    title: "Psychology",
+    icon: BrainCircuit,
+    slug: "/specialties/psychology-billing",
+    description: "Psychology billing aligned to therapy sessions, testing, and documentation-sensitive reimbursement.",
+  },
+  {
+    title: "Pain Management",
+    icon: ShieldCheck,
+    slug: "/specialties/pain-management-billing",
+    description: "Pain management billing support for injections, procedures, and prior-authorization-heavy claims.",
+  },
+  {
+    title: "Radiology",
+    icon: Scan,
+    slug: "/specialties/radiology-billing",
+    description: "Radiology billing built for imaging studies, interpretation services, and multi-provider workflows.",
+  },
+  {
+    title: "Oncology",
+    icon: Ribbon,
+    slug: "/specialties/oncology-billing",
+    description: "Oncology billing expertise for infusion services, treatment plans, and complex payer protocols.",
+  },
+  {
+    title: "Ophthalmology",
+    icon: Eye,
+    slug: "/specialties/ophthalmology-billing",
+    description: "Ophthalmology billing services for exams, procedures, diagnostics, and post-op care coordination.",
+  },
+  {
+    title: "ENT",
+    icon: Stethoscope,
+    slug: "/specialties/ent-billing",
+    description: "ENT billing support for office procedures, diagnostics, and payer-specific coding nuances.",
+  },
+  {
+    title: "Podiatry",
+    icon: Bone,
+    slug: "/specialties/podiatry-billing",
+    description: "Podiatry billing workflows built for foot and ankle care, procedures, and documentation accuracy.",
+  },
+  {
+    title: "Nephrology",
+    icon: Droplets,
+    slug: "/specialties/nephrology-billing",
+    description: "Nephrology billing for chronic kidney care, dialysis-related services, and complex follow-up visits.",
+  },
+  {
+    title: "Hematology",
+    icon: Microscope,
+    slug: "/specialties/hematology-billing",
+    description: "Hematology billing services for lab-intensive workflows, infusions, and specialty treatment coding.",
+  },
+  {
+    title: "Rheumatology",
+    icon: Hand,
+    slug: "/specialties/rheumatology-billing",
+    description: "Rheumatology billing support for chronic disease management, infusions, and ongoing payer edits.",
+  },
+  {
+    title: "Plastic Surgery",
+    icon: Sparkles,
+    slug: "/specialties/plastic-surgery-billing",
+    description: "Plastic surgery billing workflows for reconstructive procedures, documentation, and reimbursement review.",
+  },
+  {
+    title: "General Surgery",
+    icon: ClipboardCheck,
+    slug: "/specialties/general-surgery-billing",
+    description: "General surgery billing services for pre-op, operative, and post-op claim accuracy.",
+  },
+  {
+    title: "Physical Therapy",
+    icon: Accessibility,
+    slug: "/specialties/physical-therapy-billing",
+    description: "Physical therapy billing designed for therapy units, progress tracking, and payer compliance.",
+  },
+  {
+    title: "Occupational Therapy",
+    icon: Hand,
+    slug: "/specialties/occupational-therapy-billing",
+    description: "Occupational therapy billing services for treatment plans, functional assessments, and authorization support.",
+  },
+  {
+    title: "Sports Medicine",
+    icon: Activity,
+    slug: "/specialties/sports-medicine-billing",
+    description: "Sports medicine billing tailored to injury care, rehab coordination, and procedure-heavy claims.",
+  },
+  {
+    title: "Allergy & Immunology",
+    icon: Sparkles,
+    slug: "/specialties/allergy-immunology-billing",
+    description: "Specialty billing for allergy testing, immunotherapy, and ongoing treatment reimbursement.",
+  },
+  {
+    title: "Infectious Disease",
+    icon: ShieldCheck,
+    slug: "/specialties/infectious-disease-billing",
+    description: "Infectious disease billing support for consultations, complex care plans, and payer documentation rules.",
+  },
+  {
+    title: "Geriatrics",
+    icon: UserRound,
+    slug: "/specialties/geriatrics-billing",
+    description: "Geriatric billing services focused on chronic care, care coordination, and Medicare-heavy payer mix.",
+  },
+  {
+    title: "Sleep Medicine",
+    icon: Moon,
+    slug: "/specialties/sleep-medicine-billing",
+    description: "Sleep medicine billing for diagnostics, follow-ups, device management, and specialty coding.",
+  },
+  {
+    title: "Obstetrics",
+    icon: Baby,
+    slug: "/specialties/obstetrics-billing",
+    description: "Obstetrics billing support for prenatal care, delivery claims, and bundled payer reimbursement.",
+  },
+  {
+    title: "Gynecology",
+    icon: Heart,
+    slug: "/specialties/gynecology-billing",
+    description: "Gynecology billing services for office procedures, preventive care, and surgical claim workflows.",
+  },
+  {
+    title: "Maternal Fetal Medicine",
+    icon: Baby,
+    slug: "/specialties/maternal-fetal-medicine-billing",
+    description: "Billing support for high-risk pregnancy care, advanced imaging, and specialty maternal services.",
+  },
+  {
+    title: "Bariatric Medicine",
+    icon: Activity,
+    slug: "/specialties/bariatric-medicine-billing",
+    description: "Bariatric billing workflows for medically supervised weight care, procedures, and payer authorization rules.",
+  },
+  {
+    title: "Vascular Surgery",
+    icon: HeartPulse,
+    slug: "/specialties/vascular-surgery-billing",
+    description: "Vascular surgery billing for procedures, diagnostics, and specialty reimbursement management.",
+  },
+  {
+    title: "Colorectal Surgery",
+    icon: ClipboardCheck,
+    slug: "/specialties/colorectal-surgery-billing",
+    description: "Colorectal surgery billing designed for complex surgical workflows and documentation accuracy.",
+  },
+  {
+    title: "Emergency Medicine",
+    icon: Ambulance,
+    slug: "/specialties/emergency-medicine-billing",
+    description: "Emergency medicine billing support for fast-paced claims, acuity-based coding, and payer edits.",
+  },
+  {
+    title: "Hospital Medicine",
+    icon: Hospital,
+    slug: "/specialties/hospital-medicine-billing",
+    description: "Hospital medicine billing services for inpatient rounds, care transitions, and revenue integrity.",
+  },
+  {
+    title: "Anesthesiology",
+    icon: Pill,
+    slug: "/specialties/anesthesiology-billing",
+    description: "Anesthesiology billing support for time-based units, modifiers, and surgical coordination.",
+  },
+  {
+    title: "Critical Care",
+    icon: HeartPulse,
+    slug: "/specialties/critical-care-billing",
+    description: "Critical care billing workflows for intensive services, time tracking, and high-complexity documentation.",
+  },
+  {
+    title: "Preventive Medicine",
+    icon: ShieldCheck,
+    slug: "/specialties/preventive-medicine-billing",
+    description: "Preventive medicine billing designed for screenings, wellness visits, and payer policy compliance.",
+  },
+  {
+    title: "Addiction Medicine",
+    icon: BrainCircuit,
+    slug: "/specialties/addiction-medicine-billing",
+    description: "Addiction medicine billing services for treatment programs, counseling, and recurring authorization needs.",
+  },
+  {
+    title: "Telemedicine",
+    icon: Monitor,
+    slug: "/specialties/telemedicine-billing",
+    description: "Telemedicine billing built for virtual care rules, place-of-service requirements, and payer updates.",
+  },
+  {
+    title: "Rehabilitation Medicine",
+    icon: Accessibility,
+    slug: "/specialties/rehabilitation-medicine-billing",
+    description: "Rehabilitation medicine billing support for therapy-centered care plans and long-term treatment cycles.",
+  },
+  {
+    title: "Clinical Psychology",
+    icon: Brain,
+    slug: "/specialties/clinical-psychology-billing",
+    description: "Clinical psychology billing workflows for therapy, assessments, and behavioral health reimbursement accuracy.",
+  },
+  {
+    title: "Hospital Billing",
+    icon: Building2,
+    slug: "/specialties/hospital-billing-services",
+    description: "Hospital billing support for high-volume claims, departmental complexity, and contract-aware collections.",
+  },
+  {
+    title: "Home Health",
+    icon: Building,
+    slug: "/specialties/home-health-billing",
+    description: "Home health billing services for recurring visits, compliance documentation, and payer coordination.",
+  },
+  {
+    title: "DME Billing",
+    icon: BriefcaseMedical,
+    slug: "/specialties/dme-billing",
+    description: "Durable medical equipment billing support for documentation, authorizations, and recurring supply claims.",
+  },
+  {
+    title: "Behavioral Health",
+    icon: BrainCircuit,
+    slug: "/specialties/behavioral-health-billing",
+    description: "Behavioral health billing expertise for therapy programs, compliance, and session-based reimbursement.",
+  },
+  {
+    title: "Clinical Laboratory",
+    icon: Microscope,
+    slug: "/specialties/clinical-laboratory-billing",
+    description: "Laboratory billing services built for test-volume accuracy, coding precision, and payer reporting rules.",
+  },
 ];
 
 const supportFeatures = [
@@ -185,8 +459,8 @@ export default function SpecialtiesPageContent() {
             <div className="overflow-hidden rounded-3xl border border-white/30 bg-white/10 p-3 shadow-xl backdrop-blur-sm">
               <div className="relative h-[320px] overflow-hidden rounded-2xl sm:h-[440px]">
                 <Image
-                  src="/images/team-doctors-standing-together-hospital-premises.jpg"
-                  alt="Healthcare specialties billing support team"
+                  src="/images/healthcare-billing-support-team.jpg"
+                  alt="Specialty billing support team for diverse healthcare practices"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 560px"
@@ -252,8 +526,8 @@ export default function SpecialtiesPageContent() {
           >
             <div className="relative h-[280px] overflow-hidden rounded-2xl sm:h-[380px]">
               <Image
-                src="/images/young-male-psysician-with-patient-hospital.jpg"
-                alt="Specialty-specific medical billing workflow support"
+                src="/images/physician-patient-specialty-billing-consultation.jpg"
+                alt="Physician and patient consultation reflecting specialty-specific billing workflows"
                 fill
                 sizes="(max-width: 1024px) 100vw, 480px"
                 className="object-cover object-center"
@@ -271,10 +545,15 @@ export default function SpecialtiesPageContent() {
         </div>
       </section>
 
-      <section className="border-t border-primary/10 bg-medical-very-light-bg px-4 py-16 sm:px-6 lg:px-8">
+      <section className="border-t border-primary/10 bg-medical-very-light-bg px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <SectionHeader label="Specialties" title="Medical Billing Specialties We Support" />
-          <div className="mt-8">
+          <SectionHeader
+            label="Specialties"
+            title="Our Medical Billing Specialties"
+            description="We provide expert medical billing and revenue cycle management services for a wide range of healthcare specialties."
+            align="center"
+          />
+          <div className="mt-12">
             <SpecialtyGrid items={specialties} />
           </div>
         </div>
@@ -367,10 +646,10 @@ export default function SpecialtiesPageContent() {
           >
             {providerTypes.map(({ title, icon: Icon }) => (
               <motion.div key={title} variants={itemVariants} whileHover={{ y: -6 }}>
-                <div className="group relative flex min-h-[170px] items-center justify-center overflow-hidden rounded-3xl border border-primary/15 bg-white p-6 text-center shadow-sm transition-[transform,box-shadow,border-color,background-color] duration-300 hover:border-primary/30 hover:bg-primary/[0.03] hover:shadow-xl hover:shadow-primary/20">
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-teal/70 to-primary/70 opacity-70 transition-opacity duration-300 group-hover:opacity-100" />
-                  <div className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-primary/10 blur-2xl transition-colors duration-300 group-hover:bg-primary/20" />
-                  <span className="relative mx-auto mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-300 group-hover:scale-105 group-hover:bg-primary group-hover:text-medical-text-white">
+                <div className="group relative flex min-h-[170px] items-center justify-center overflow-hidden rounded-3xl border border-primary/15 bg-white p-6 text-center shadow-sm transition-[transform,box-shadow,border-color,background-color] duration-300 md:hover:border-primary/30 md:hover:bg-primary/[0.03] md:hover:shadow-xl md:hover:shadow-primary/20">
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-teal/70 to-primary/70 opacity-70 transition-opacity duration-300 md:group-hover:opacity-100" />
+                  <div className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-primary/10 blur-2xl transition-colors duration-300 md:group-hover:bg-primary/20" />
+                  <span className="relative mx-auto mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary transition-all duration-300 md:group-hover:scale-105 md:group-hover:bg-primary md:group-hover:text-medical-text-white">
                     <Icon className="h-7 w-7" />
                   </span>
                   <p className="relative m-0 text-base font-semibold leading-snug text-heading">{title}</p>

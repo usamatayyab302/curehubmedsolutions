@@ -1,9 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  BadgeHelp,
+  ChevronDown,
   Building,
   Bone,
   BookOpenText,
@@ -15,6 +16,7 @@ import {
   Home,
   Menu,
   PanelsTopLeft,
+  Phone,
   RotateCcw,
   ShieldCheck,
   Sparkles,
@@ -34,7 +36,15 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { type HeaderNavItem } from "@/lib/site-navigation";
 import { cn } from "@/lib/utils";
 
@@ -51,9 +61,10 @@ const topLevelVisuals: Record<string, NavVisual> = {
   "/": { icon: Home, description: "Home page" },
   "/about-us": { icon: UserRound, description: "About company" },
   "/services": { icon: BriefcaseMedical, description: "All services" },
+  "/specialities": { icon: Stethoscope, description: "Specialty billing" },
   "/specialties": { icon: Stethoscope, description: "Specialty billing" },
-  "/blogs": { icon: BookOpenText, description: "Insights and updates" },
-  "/faqs": { icon: BadgeHelp, description: "Frequently asked questions" },
+  "/blog": { icon: BookOpenText, description: "Insights and updates" },
+  "/contact-us": { icon: Phone, description: "Contact us" },
 };
 
 const pageVisuals: Record<string, NavVisual> = {
@@ -65,7 +76,11 @@ const pageVisuals: Record<string, NavVisual> = {
     icon: ShieldCheck,
     description: "Provider enrollment and payer credentialing support.",
   },
-  "/services/ar-collection-services": {
+  "/services/provider-credentialing": {
+    icon: ShieldCheck,
+    description: "Provider enrollment, credentialing, and contracting support.",
+  },
+  "/services/accounts-receivable-collection": {
     icon: HandCoins,
     description: "Focused AR follow-up to reduce aging balances.",
   },
@@ -84,6 +99,14 @@ const pageVisuals: Record<string, NavVisual> = {
   "/services/value-added-services": {
     icon: Sparkles,
     description: "Additional support services for practice growth.",
+  },
+  "/services/denial-management": {
+    icon: RotateCcw,
+    description: "Denied claim review, correction, and recovery support.",
+  },
+  "/services/medicare-part-a-b-c-d-billing": {
+    icon: BriefcaseMedical,
+    description: "Medicare-related billing support across Part A, B, C, and D workflows.",
   },
   "/specialties/hospital-billing-services": {
     icon: Building,
@@ -113,16 +136,38 @@ function getChildVisual(href: string, parentLabel: string): NavVisual {
 export default function HeaderClient({ items }: HeaderClientProps) {
   const pathname = usePathname();
 
+  function isActiveItem(item: HeaderNavItem) {
+    if (item.children?.length) {
+      return (
+        item.children.some((child) => pathname === child.href) ||
+        pathname === item.href ||
+        (item.href === "/specialities" && pathname === "/specialties")
+      );
+    }
+
+    if (item.href === "/blog") {
+      return pathname === "/blog" || pathname.startsWith("/blog/");
+    }
+
+    return pathname === item.href;
+  }
+
   return (
-    <header className="sticky top-0 z-50 border-b border-primary/20 bg-gradient-to-r from-medical-very-light-bg via-medical-white to-medical-soft-green shadow-[0_10px_24px_-20px_rgba(37,99,235,0.6)]">
-      <div className="mx-auto flex h-20 w-full max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary to-teal text-medical-text-white shadow-md shadow-primary/20">
-            <ShieldCheck className="h-5 w-5" />
-          </span>
-          <span className="font-heading text-base font-bold tracking-tight text-heading sm:text-lg">
-            Cure Hub Med Solutions
-          </span>
+    <header className="sticky top-0 z-50 border-b border-primary/20 bg-gradient-to-r from-medical-very-light-bg via-medical-white to-medical-soft-green shadow-[var(--shadow-navbar)]">
+      <div className="mx-auto flex h-24 w-full max-w-7xl items-center gap-4 px-4 sm:h-22 sm:px-6 lg:h-20 lg:px-8">
+        <Link
+          href="/"
+          className="relative block h-16 w-[220px] shrink-0 sm:h-14 sm:w-[230px] lg:h-14 lg:w-[250px]"
+          aria-label="Cure Hub Med Solutions"
+        >
+          <Image
+            src="/Cure Hub Med Solutions Logo.png"
+            alt="Cure Hub Med Solutions"
+            fill
+            priority
+            className="object-contain object-left"
+            sizes="(min-width: 1024px) 250px, (min-width: 640px) 230px, 220px"
+          />
         </Link>
 
         <div className="hidden flex-1 justify-center lg:flex">
@@ -130,9 +175,7 @@ export default function HeaderClient({ items }: HeaderClientProps) {
             <NavigationMenuList>
               {items.map((item) => {
                 const hasChildren = Boolean(item.children?.length);
-                const active = hasChildren
-                  ? item.children?.some((child) => pathname === child.href) || pathname === item.href
-                  : pathname === item.href;
+                const active = isActiveItem(item);
                 const topVisual = getTopLevelVisual(item.href);
                 const TopIcon = topVisual.icon;
 
@@ -176,29 +219,26 @@ export default function HeaderClient({ items }: HeaderClientProps) {
                               </li>
                             );
                           })}
-                          {item.href === "/specialties" && (
+                          {item.href === "/specialities" && (
                             <li className="sm:col-span-2">
-                              <NavigationMenuLink asChild>
-                                <Link
-                                  href="/specialties"
-                                  className={cn(
-                                    "rounded-xl border border-primary/20 bg-gradient-to-r from-primary/5 to-teal/10 transition-all hover:from-primary/10 hover:to-teal/15",
-                                    pathname === "/specialties" && "from-primary/10 to-teal/15 text-primary-dark"
-                                  )}
-                                >
-                                  <div className="flex items-start gap-3">
-                                    <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                                      <PanelsTopLeft className="h-4 w-4" />
+                              <div className="rounded-xl border border-primary/20 bg-gradient-to-r from-primary/5 to-teal/10 p-4">
+                                <div className="flex items-start gap-3">
+                                  <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                                    <PanelsTopLeft className="h-4 w-4" />
+                                  </span>
+                                  <div className="flex-1">
+                                    <span className="block font-semibold text-heading">
+                                      View All Specialties
                                     </span>
-                                    <span>
-                                      <span className="block font-semibold">All Specialties</span>
-                                      <span className="mt-1 block text-xs leading-relaxed text-muted-text">
-                                        View all specialty billing categories.
-                                      </span>
+                                    <span className="mt-1 block text-xs leading-relaxed text-muted-text">
+                                      Browse all specialty billing categories in one place.
                                     </span>
+                                    <Button asChild size="sm" className="mt-3">
+                                      <Link href="/specialities">View All Specialties</Link>
+                                    </Button>
                                   </div>
-                                </Link>
-                              </NavigationMenuLink>
+                                </div>
+                              </div>
                             </li>
                           )}
                         </ul>
@@ -230,7 +270,7 @@ export default function HeaderClient({ items }: HeaderClientProps) {
 
         <div className="ml-auto hidden items-center gap-2 lg:flex">
           <Button asChild>
-            <Link href="/contact-us">Contact Us</Link>
+            <Link href="/contact-us">Book a Consultation</Link>
           </Button>
         </div>
 
@@ -241,13 +281,22 @@ export default function HeaderClient({ items }: HeaderClientProps) {
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[90%] max-w-xs bg-medical-white">
+            <SheetContent
+              side="right"
+              className="flex h-full w-[90%] max-w-xs flex-col overflow-hidden bg-medical-white"
+            >
+              <SheetHeader className="sr-only">
+                <SheetTitle>Mobile Navigation Menu</SheetTitle>
+                <SheetDescription>
+                  Browse the main website navigation links and specialty pages.
+                </SheetDescription>
+              </SheetHeader>
               <div className="mb-6 flex items-center gap-2 pt-6">
                 <Stethoscope className="h-4 w-4 text-primary" />
                 <p className="m-0 font-heading text-base font-semibold text-heading">Menu</p>
               </div>
 
-              <nav className="space-y-1">
+              <nav className="min-h-0 flex-1 space-y-1 overflow-y-auto pr-1">
                 {items.map((item) => {
                   const hasChildren = Boolean(item.children?.length);
                   const topVisual = getTopLevelVisual(item.href);
@@ -275,15 +324,18 @@ export default function HeaderClient({ items }: HeaderClientProps) {
                   return (
                     <details
                       key={item.href}
-                      className="rounded-xl border border-primary/15 bg-gradient-to-r from-medical-very-light-bg/70 to-medical-soft-green/30 p-2"
+                      className="group rounded-xl border border-primary/15 bg-gradient-to-r from-medical-very-light-bg/70 to-medical-soft-green/30 p-2"
                     >
-                      <summary className="cursor-pointer list-none px-2 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-muted-text">
-                        <span className="flex items-center gap-2">
-                          <TopIcon className="h-4 w-4" />
-                          {item.label}
+                      <summary className="cursor-pointer list-none px-2 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-muted-text [&::-webkit-details-marker]:hidden">
+                        <span className="flex items-center justify-between gap-2">
+                          <span className="flex items-center gap-2">
+                            <TopIcon className="h-4 w-4" />
+                            {item.label}
+                          </span>
+                          <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" />
                         </span>
                       </summary>
-                      <div className="mt-1 space-y-1">
+                      <div className="mt-1 max-h-72 space-y-1 overflow-y-auto pr-1">
                         {item.children?.map((child) => {
                           const childVisual = getChildVisual(child.href, item.label);
                           const ChildIcon = childVisual.icon;
@@ -311,27 +363,25 @@ export default function HeaderClient({ items }: HeaderClientProps) {
                             </SheetClose>
                           );
                         })}
-                        {item.href === "/specialties" && (
-                          <SheetClose asChild>
-                            <Link
-                              href="/specialties"
-                              className={cn(
-                                "block rounded-lg px-2 py-2 text-sm text-heading transition hover:bg-gradient-to-r hover:from-primary/10 hover:to-teal/10 hover:text-primary-dark",
-                                pathname === "/specialties" &&
-                                  "bg-gradient-to-r from-primary/10 to-teal/10 text-primary-dark"
-                              )}
-                            >
-                              <span className="flex items-start gap-2">
-                                <PanelsTopLeft className="mt-0.5 h-4 w-4 shrink-0" />
-                                <span>
-                                  <span className="block">All Specialties</span>
-                                  <span className="block text-xs text-muted-text">
-                                    View all specialty billing categories.
-                                  </span>
+                        {item.href === "/specialities" && (
+                          <div className="rounded-lg border border-primary/15 bg-white/70 p-3">
+                            <div className="flex items-start gap-2">
+                              <PanelsTopLeft className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                              <div className="flex-1">
+                                <span className="block text-sm font-medium text-heading">
+                                  View All Specialties
                                 </span>
-                              </span>
-                            </Link>
-                          </SheetClose>
+                                <span className="mt-1 block text-xs text-muted-text">
+                                  See every specialty billing category.
+                                </span>
+                                <SheetClose asChild>
+                                  <Button asChild size="sm" className="mt-3 w-full">
+                                    <Link href="/specialities">View All Specialties</Link>
+                                  </Button>
+                                </SheetClose>
+                              </div>
+                            </div>
+                          </div>
                         )}
                       </div>
                     </details>
@@ -342,7 +392,7 @@ export default function HeaderClient({ items }: HeaderClientProps) {
               <div className="mt-6">
                 <SheetClose asChild>
                   <Button asChild className="w-full">
-                    <Link href="/contact-us">Get Free Consultation</Link>
+                    <Link href="/contact-us">Book a Consultation</Link>
                   </Button>
                 </SheetClose>
               </div>
@@ -353,6 +403,3 @@ export default function HeaderClient({ items }: HeaderClientProps) {
     </header>
   );
 }
-
-
-

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Facebook, Linkedin, Mail, Phone, Twitter } from "lucide-react";
 
@@ -24,7 +25,19 @@ export default async function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
         <div className="grid gap-8 text-center sm:grid-cols-2 lg:grid-cols-4 lg:text-left">
           <div className="rounded-2xl border border-medical-text-white/25 bg-medical-text-white/10 p-5 backdrop-blur-sm sm:col-span-2 lg:col-span-1">
-            <h3 className="font-heading text-xl font-bold text-medical-text-white">Cure Hub Med Solutions</h3>
+            <Link
+              href="/"
+              className="relative mx-auto block h-16 w-[280px] max-w-full lg:mx-0"
+              aria-label="Cure Hub Med Solutions"
+            >
+              <Image
+                src="/Cure Hub Med Solutions Logo.png"
+                alt="Cure Hub Med Solutions"
+                fill
+                className="object-contain object-center lg:object-left"
+                sizes="280px"
+              />
+            </Link>
             <p className="mt-3 text-sm text-medical-text-on-dark">
               End-to-end medical billing, credentialing, and revenue cycle support tailored for
               modern healthcare practices.

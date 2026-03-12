@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import HomePageContent from "./components/home-page-content";
+import { getLatestPosts } from "@/lib/posts";
 
 const siteUrl = "https://www.curehubmedsolutions.com";
 const seoTitle = "Medical Billing Services USA | Revenue Cycle Management";
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const latestPosts = getLatestPosts(3);
   const schema = [
     {
       "@context": "https://schema.org",
@@ -114,7 +116,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
-      <HomePageContent />
+      <HomePageContent latestPosts={latestPosts} />
     </>
   );
 }

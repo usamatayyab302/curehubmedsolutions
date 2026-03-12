@@ -14,7 +14,7 @@ type SpecialtyGridProps = {
 
 export default function SpecialtyGrid({ items }: SpecialtyGridProps) {
   return (
-    <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
       {items.map((item) => (
         <SpecialtyCard
           key={item.slug}
@@ -27,4 +27,3 @@ export default function SpecialtyGrid({ items }: SpecialtyGridProps) {
     </div>
   );
 }
-

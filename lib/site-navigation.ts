@@ -24,6 +24,18 @@ export type SiteNavigation = {
   legal: NavLink[];
 };
 
+const SERVICE_NAV_ITEMS: NavLink[] = [
+  { href: "/services/new-practice-setup", label: "New Practice Setup" },
+  { href: "/services/front-office-management", label: "Front Office Management" },
+  { href: "/services/provider-credentialing", label: "Credentialing and Contracting" },
+  { href: "/services/medical-billing-services", label: "Medical Billing Services" },
+  { href: "/services/accounts-receivable-collection", label: "AR Collection" },
+  { href: "/services/ar-recovery", label: "AR Recovery" },
+  { href: "/services/denial-management", label: "Denial Management" },
+  { href: "/services/medicare-part-a-b-c-d-billing", label: "Part A, B, C, D Services" },
+  { href: "/services/value-added-services", label: "Value Added Services" },
+];
+
 async function readPageRoutes(dir: string, segments: string[] = []): Promise<string[]> {
   const entries = await readdir(dir, { withFileTypes: true });
   const routes: string[] = [];
@@ -84,66 +96,41 @@ export const getSiteNavigation = cache(async (): Promise<SiteNavigation> => {
   const routes = [...new Set(await readPageRoutes(APP_DIR))].sort();
 
   const allLinks: NavLink[] = routes.map((href) => ({ href, label: toLabelFromRoute(href) }));
-  const services = allLinks.filter((link) => link.href.startsWith("/services/")).sort(sortByLabel);
-  const nestedByParent = new Map<string, NavLink[]>();
+  const linkByHref = new Map(allLinks.map((link) => [link.href, link]));
+  const services = SERVICE_NAV_ITEMS.filter((link) => linkByHref.has(link.href));
 
-  for (const link of allLinks) {
-    const segments = link.href.split("/").filter(Boolean);
-    if (segments.length !== 2) continue;
-
-    const parent = `/${segments[0]}`;
-    const current = nestedByParent.get(parent) ?? [];
-    current.push(link);
-    nestedByParent.set(parent, current);
-  }
-
-  for (const [parent, children] of nestedByParent) {
-    nestedByParent.set(parent, children.sort(sortByLabel));
-  }
-
-  const topLevelPages = allLinks
-    .filter((link) => {
-      if (link.href === "/") return true;
-      if (HIDDEN_ROUTES.has(link.href)) return false;
-      if (link.href === "/contact-us" || link.href === "/contact") return false;
-      if (link.href === "/specialities") return false;
-
-      const depth = link.href.split("/").filter(Boolean).length;
-      return depth === 1;
-    })
-    .sort((a, b) => {
-      if (a.href === "/") return -1;
-      if (b.href === "/") return 1;
-      return sortByLabel(a, b);
-    });
-
-  const header: HeaderNavItem[] = topLevelPages.map((link) => {
-    const children = nestedByParent.get(link.href);
-    return children?.length ? { ...link, children } : link;
-  });
-
-  for (const [parent, children] of nestedByParent) {
-    if (header.some((item) => item.href === parent)) continue;
-    if (!children.length) continue;
-    if (HIDDEN_ROUTES.has(parent) || parent === "/contact-us" || parent === "/contact") continue;
-    if (parent === "/specialities") continue;
-
-    header.push({
-      href: parent,
-      label: toLabelFromRoute(parent),
-      children,
-    });
-  }
-  header.sort((a, b) => {
-    if (a.href === "/") return -1;
-    if (b.href === "/") return 1;
-    return sortByLabel(a, b);
-  });
+  const header: HeaderNavItem[] = [
+    { href: "/", label: "Home" },
+    { href: "/about-us", label: "About" },
+    {
+      href: "/services",
+      label: "Services",
+      children: services,
+    },
+    {
+      href: "/specialities",
+      label: "Specialties",
+      children: [
+        {
+          href: "/specialties/chiropractic-billing-services",
+          label: "Chiropractic Billing Services",
+        },
+        {
+          href: "/specialties/mental-health-billing-services",
+          label: "Mental Health Billing Services",
+        },
+        { href: "/specialties/hospital-billing-services", label: "Hospital Billing Services" },
+      ].filter((link) => linkByHref.has(link.href)),
+    },
+    { href: "/blog", label: "Blog" },
+    { href: "/faqs", label: "FAQs" },
+  ].filter((item) => linkByHref.has(item.href) || item.href === "/");
 
   const footerCompany = allLinks
     .filter((link) => {
       if (HIDDEN_ROUTES.has(link.href)) return false;
       if (link.href === "/") return false;
+      if (link.href === "/blogs") return false;
       if (link.href.startsWith("/services")) return false;
       const depth = link.href.split("/").filter(Boolean).length;
       return depth === 1;

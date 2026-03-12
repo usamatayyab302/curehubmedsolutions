@@ -1,33 +1,183 @@
 @import "tailwindcss";
 
 :root {
-  /* Primary healthcare palette (as per provided setup) */
-  --medical-primary-blue: #00A3A5; /* Kelly Green */
-  --medical-dark-blue: #015D67; /* Forest Green */
-  --medical-light-blue: #72C4BD; /* Mint */
-  --medical-very-light-bg: #E9F2F3; /* G8 */
-  --medical-bg-base: #FAFCFC; /* G2 */
-  --medical-soft-surface: #F0F5F6; /* G5 */
+  /* Cure Hub Med Solutions brand palette */
+  --brand-green-50: #F4FBF7;
+  --brand-green-100: #E6F5EC;
+  --brand-green-200: #CDE9D9;
+  --brand-green-300: #AAD8BF;
+  --brand-green-400: #8BC7A4;
+  --brand-green-500: #6FBD94;
+  --brand-green-600: #59A67F;
+  --brand-green-700: #468467;
+  --brand-green-800: #34634D;
+  --brand-green-900: #244536;
 
-  /* Secondary and accent */
-  --medical-accent-green: #AFCFC1; /* Pistachio */
-  --medical-soft-green: #D5E4E6; /* G16 */
-  --medical-teal: #3F6C75; /* G88 */
+  --brand-blue-50: #F2F6FB;
+  --brand-blue-100: #E1EAF5;
+  --brand-blue-200: #C3D5EA;
+  --brand-blue-300: #9FB7D2;
+  --brand-blue-400: #6F8FB2;
+  --brand-blue-500: #4D6F95;
+  --brand-blue-600: #35587F;
+  --brand-blue-700: #23456B;
+  --brand-blue-800: #15365F;
+  --brand-blue-900: #0E2746;
 
-  /* Neutral palette */
-  --medical-white: #FFFFFF;
-  --medical-light-gray: #F1F5F9;
-  --medical-text-white: #FFFFFF;
-  --medical-text-gray: #475569;
-  --medical-dark-text: #0F172A;
-  --medical-text-on-dark: #FFFFFF;
+  --neutral-0: #FFFFFF;
+  --neutral-25: #FCFEFD;
+  --neutral-50: #F7FAF9;
+  --neutral-100: #EEF4F2;
+  --neutral-200: #DDE7E4;
+  --neutral-300: #C7D3D0;
+  --neutral-400: #92A3AD;
+  --neutral-500: #667988;
+  --neutral-600: #4E6272;
+  --neutral-700: #364B5C;
+  --neutral-800: #253748;
+  --neutral-900: #182635;
+
+  /* Requested brand anchors */
+  --primary-color: #6FBD94;
+  --secondary-color: #15365F;
+  --accent-color: #AAD8BF;
+  --white-color: #FFFFFF;
+
+  /* Light and dark variations */
+  --primary-light: var(--brand-green-300);
+  --primary-soft: var(--brand-green-100);
+  --primary-dark: var(--brand-green-700);
+  --primary-deep: var(--brand-green-900);
+  --secondary-light: var(--brand-blue-300);
+  --secondary-soft: var(--brand-blue-100);
+  --secondary-dark: var(--brand-blue-900);
+  --accent-light: #D9EEE3;
+  --accent-soft: #ECF7F0;
+  --accent-strong: #4F8E6D;
+  --teal-color: #3C6F78;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  --gradient-hero: linear-gradient(
+    135deg,
+    var(--secondary-color) 0%,
+    var(--brand-blue-600) 34%,
+    var(--primary-color) 72%,
+    var(--accent-color) 100%
+  );
+  --gradient-soft-medical: linear-gradient(135deg, var(--accent-color) 0%, var(--white-color) 100%);
+  --gradient-button: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  --gradient-button-hover: linear-gradient(135deg, var(--brand-green-600) 0%, var(--brand-blue-900) 100%);
+  --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(170, 216, 191, 0.18) 100%);
+  --gradient-section: linear-gradient(180deg, var(--neutral-25) 0%, var(--neutral-0) 100%);
+  --gradient-footer: linear-gradient(180deg, var(--brand-blue-900) 0%, var(--secondary-color) 48%, var(--brand-blue-600) 100%);
+
+  /* Backgrounds */
+  --background-page: var(--white-color);
+  --background-canvas: var(--neutral-25);
+  --background-subtle: var(--neutral-50);
+  --background-soft: var(--neutral-100);
+  --background-section: var(--neutral-0);
+  --background-section-alt: #F4FAF7;
+  --background-section-soft: #EDF5F1;
+  --background-navbar: rgba(255, 255, 255, 0.94);
+  --background-card: var(--neutral-0);
+  --background-card-soft: #F9FCFA;
+  --background-card-accent: rgba(170, 216, 191, 0.18);
+  --background-form: var(--neutral-0);
+  --background-input: #FCFEFD;
+  --background-footer: var(--secondary-color);
+  --background-overlay: rgba(21, 54, 95, 0.58);
+
+  /* Text */
+  --text-dark: var(--neutral-900);
+  --text-heading: var(--secondary-color);
+  --text-body: var(--neutral-600);
+  --text-muted: var(--neutral-500);
+  --text-subtle: var(--neutral-400);
+  --text-inverse: var(--white-color);
+  --text-on-dark: rgba(255, 255, 255, 0.84);
+  --text-link: var(--primary-dark);
+  --text-link-hover: var(--secondary-color);
+
+  /* Borders */
+  --border-light: rgba(21, 54, 95, 0.08);
+  --border-default: rgba(21, 54, 95, 0.14);
+  --border-strong: rgba(21, 54, 95, 0.22);
+  --border-accent: rgba(111, 189, 148, 0.32);
+  --border-focus: rgba(111, 189, 148, 0.38);
+  --border-inverse: rgba(255, 255, 255, 0.24);
+
+  /* Hover states */
+  --hover-primary: var(--brand-green-600);
+  --hover-primary-dark: var(--brand-green-700);
+  --hover-secondary: var(--brand-blue-900);
+  --hover-accent: #94CFB3;
+  --hover-surface: rgba(111, 189, 148, 0.08);
+  --hover-card: rgba(21, 54, 95, 0.03);
+  --hover-link: var(--brand-blue-700);
+
+  /* Shadows */
+  --shadow-color: rgba(21, 54, 95, 0.14);
+  --shadow-color-strong: rgba(21, 54, 95, 0.22);
+  --shadow-color-soft: rgba(111, 189, 148, 0.18);
+  --shadow-navbar: 0 14px 36px -28px rgba(21, 54, 95, 0.35);
+  --shadow-card: 0 18px 40px -28px rgba(21, 54, 95, 0.22);
+  --shadow-card-hover: 0 28px 60px -30px rgba(21, 54, 95, 0.28);
+  --shadow-button: 0 16px 30px -20px rgba(21, 54, 95, 0.28);
+  --shadow-focus-ring: 0 0 0 4px rgba(111, 189, 148, 0.16);
+
+  /* Medical UI colors */
+  --medical-success: var(--brand-green-600);
+  --medical-success-bg: #EEF8F2;
+  --medical-info: var(--brand-blue-600);
+  --medical-info-bg: #EEF4FA;
+  --medical-warning: #D39B3F;
+  --medical-warning-bg: #FFF7E8;
+  --medical-critical: #C0646D;
+  --medical-critical-bg: #FFF2F4;
+  --medical-trust: var(--secondary-color);
+  --medical-trust-bg: #EEF3F8;
+
+  /* Component-level tokens */
+  --navbar-background: var(--background-navbar);
+  --navbar-border: var(--border-light);
+  --button-primary-bg: var(--gradient-button);
+  --button-primary-text: var(--text-inverse);
+  --button-secondary-bg: var(--accent-strong);
+  --button-secondary-text: var(--text-inverse);
+  --button-secondary-hover: var(--hover-primary-dark);
+  --card-background: var(--background-card);
+  --card-background-soft: var(--background-card-soft);
+  --card-background-accent: var(--gradient-card);
+  --section-background: var(--background-section);
+  --section-background-alt: var(--background-section-alt);
+  --section-background-soft: var(--background-section-soft);
+  --footer-background: var(--gradient-footer);
+
+  /* Backward-compatible aliases for current utilities */
+  --medical-primary-blue: var(--primary-color);
+  --medical-dark-blue: var(--secondary-color);
+  --medical-light-blue: var(--accent-color);
+  --medical-very-light-bg: var(--background-section-alt);
+  --medical-bg-base: var(--background-page);
+  --medical-soft-surface: var(--background-card-soft);
+  --medical-accent-green: var(--accent-strong);
+  --medical-soft-green: var(--accent-soft);
+  --medical-teal: var(--teal-color);
+  --medical-white: var(--white-color);
+  --medical-light-gray: var(--background-soft);
+  --medical-text-white: var(--text-inverse);
+  --medical-text-gray: var(--text-body);
+  --medical-dark-text: var(--text-dark);
+  --medical-text-on-dark: var(--text-on-dark);
 
   /* App-level semantic tokens */
-  --background: var(--medical-bg-base);
-  --foreground: var(--medical-dark-text);
-  --surface: var(--medical-very-light-bg);
-  --muted-surface: var(--medical-soft-surface);
-  --muted-text: var(--medical-text-gray);
+  --background: var(--background-page);
+  --foreground: var(--text-dark);
+  --surface: var(--background-section-alt);
+  --muted-surface: var(--background-card-soft);
+  --muted-text: var(--text-muted);
 
   /* Typography scale - mobile first */
   --fs-hero: 2rem; /* 32px */
@@ -44,17 +194,27 @@
   --color-muted-surface: var(--muted-surface);
   --color-muted-text: var(--muted-text);
 
-  --color-primary: var(--medical-primary-blue);
-  --color-primary-dark: var(--medical-dark-blue);
-  --color-primary-light: var(--medical-light-blue);
-
-  --color-accent: var(--medical-accent-green);
-  --color-accent-soft: var(--medical-soft-green);
-  --color-teal: var(--medical-teal);
-
-  --color-heading: var(--medical-dark-text);
-  --color-primary-button-hover: var(--medical-dark-blue);
-  --color-secondary-button-hover: #76A3A7;
+  --color-primary: var(--primary-color);
+  --color-primary-dark: var(--secondary-color);
+  --color-primary-light: var(--accent-color);
+  --color-secondary: var(--secondary-color);
+  --color-secondary-light: var(--secondary-light);
+  --color-accent: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-teal: var(--teal-color);
+  --color-heading: var(--text-heading);
+  --color-link: var(--text-link);
+  --color-link-hover: var(--text-link-hover);
+  --color-border: var(--border-default);
+  --color-border-strong: var(--border-strong);
+  --color-card: var(--card-background);
+  --color-card-soft: var(--card-background-soft);
+  --color-primary-button-hover: var(--hover-primary-dark);
+  --color-secondary-button-hover: var(--button-secondary-hover);
+  --color-success: var(--medical-success);
+  --color-info: var(--medical-info);
+  --color-warning: var(--medical-warning);
+  --color-critical: var(--medical-critical);
 
   --color-medical-primary-blue: var(--medical-primary-blue);
   --color-medical-dark-blue: var(--medical-dark-blue);
@@ -86,7 +246,8 @@ body {
 
 html {
   scrollbar-width: thin;
-  scrollbar-color: var(--medical-primary-blue) var(--medical-light-gray);
+  scrollbar-color: var(--primary-color) var(--background-soft);
+  scroll-behavior: smooth;
 }
 
 *::-webkit-scrollbar {
@@ -95,17 +256,17 @@ html {
 }
 
 *::-webkit-scrollbar-track {
-  background: var(--medical-light-gray);
+  background: var(--background-soft);
 }
 
 *::-webkit-scrollbar-thumb {
-  border: 2px solid var(--medical-light-gray);
+  border: 2px solid var(--background-soft);
   border-radius: 9999px;
-  background: var(--medical-primary-blue);
+  background: var(--primary-color);
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: var(--medical-dark-blue);
+  background: var(--secondary-color);
 }
 
 .page-transition-enter {
@@ -143,6 +304,10 @@ html {
 
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .page-transition-enter {
     animation: none;
   }
@@ -206,44 +371,41 @@ small {
 }
 
 .btn-primary {
-  background-color: var(--medical-primary-blue);
-  color: var(--medical-white);
-  transition: background-color 0.2s ease;
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  box-shadow: var(--shadow-button);
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .btn-primary:hover {
-  background-color: var(--medical-dark-blue);
+  background: var(--gradient-button-hover);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background-color: var(--medical-accent-green);
-  color: var(--medical-white);
-  transition: background-color 0.2s ease;
+  background: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
+  box-shadow: var(--shadow-card);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .btn-secondary:hover {
-  background-color: #76A3A7;
+  background-color: var(--button-secondary-hover);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-1px);
 }
 
 .section-hero {
-  background: linear-gradient(
-    135deg,
-    var(--medical-dark-blue) 0%,
-    var(--medical-primary-blue) 55%,
-    var(--medical-light-blue) 100%
-  );
+  background: var(--gradient-primary);
 }
 
 .hero-premium {
   background:
     radial-gradient(circle at 12% 20%, rgba(255, 255, 255, 0.14), transparent 34%),
-    radial-gradient(circle at 88% 82%, rgba(114, 196, 189, 0.24), transparent 40%),
-    linear-gradient(
-      135deg,
-      var(--medical-dark-blue) 0%,
-      var(--medical-primary-blue) 55%,
-      var(--medical-light-blue) 100%
-    );
+    radial-gradient(circle at 88% 82%, rgba(170, 216, 191, 0.24), transparent 40%),
+    radial-gradient(circle at 52% 48%, rgba(111, 189, 148, 0.2), transparent 48%),
+    var(--gradient-hero);
 }
 
 .hero-premium h1,
@@ -286,7 +448,8 @@ small {
 .hero-command-panel {
   background:
     linear-gradient(155deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%),
-    radial-gradient(circle at 84% 18%, rgba(96, 165, 250, 0.3), transparent 38%);
+    radial-gradient(circle at 84% 18%, rgba(111, 189, 148, 0.22), transparent 38%),
+    radial-gradient(circle at 14% 78%, rgba(21, 54, 95, 0.18), transparent 32%);
 }
 
 .hero-doctor-scene {
@@ -300,8 +463,8 @@ small {
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  background: linear-gradient(135deg, rgba(114, 196, 189, 0.95), rgba(0, 163, 165, 0.95));
-  box-shadow: 0 8px 22px rgba(0, 163, 165, 0.3);
+  background: linear-gradient(135deg, rgba(170, 216, 191, 0.95), rgba(21, 54, 95, 0.95));
+  box-shadow: 0 8px 22px rgba(21, 54, 95, 0.28);
 }
 
 .hero-floating-chip {
@@ -340,7 +503,7 @@ small {
 }
 
 .hero-metric-box {
-  border: 1px solid rgba(255, 255, 255, 0.24);
+  border: 1px solid var(--border-inverse);
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.12);
   padding: 0.8rem;
@@ -407,31 +570,27 @@ small {
 }
 
 .section-services {
-  background-color: var(--medical-white);
+  background-color: var(--section-background);
 }
 
 .section-about {
-  background-color: var(--medical-very-light-bg);
+  background-color: var(--section-background-alt);
 }
 
 .section-process {
-  background-color: var(--medical-white);
+  background-color: var(--section-background);
 }
 
 .section-testimonials {
-  background-color: var(--medical-light-gray);
+  background-color: var(--section-background-soft);
 }
 
 .section-cta {
-  background: linear-gradient(
-    120deg,
-    var(--medical-primary-blue) 0%,
-    var(--medical-dark-blue) 100%
-  );
+  background: var(--gradient-primary);
 }
 
 .icon-medical {
-  color: var(--medical-primary-blue);
+  color: var(--primary-color);
 }
 
 @keyframes laser-flow-a {
@@ -496,8 +655,8 @@ small {
   inset: 0;
   background:
     radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.22), transparent 38%),
-    radial-gradient(circle at 82% 82%, rgba(175, 207, 193, 0.25), transparent 42%),
-    radial-gradient(circle at 50% 45%, rgba(114, 196, 189, 0.2), transparent 48%);
+    radial-gradient(circle at 82% 82%, rgba(170, 216, 191, 0.25), transparent 42%),
+    radial-gradient(circle at 50% 45%, rgba(111, 189, 148, 0.2), transparent 48%);
 }
 
 .laser-smoke {
@@ -509,7 +668,7 @@ small {
   height: 180px;
   transform: translateX(-50%);
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(213, 228, 230, 0.45), rgba(1, 93, 103, 0) 74%);
+  background: radial-gradient(ellipse at center, rgba(170, 216, 191, 0.32), rgba(21, 54, 95, 0) 74%);
   filter: blur(11px);
 }
 
@@ -569,9 +728,9 @@ small {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(1, 93, 103, 0.26) 0%,
-    rgba(0, 163, 165, 0.18) 38%,
-    rgba(0, 163, 165, 0.08) 100%
+    rgba(21, 54, 95, 0.26) 0%,
+    rgba(111, 189, 148, 0.18) 38%,
+    rgba(170, 216, 191, 0.08) 100%
   );
 }
 
@@ -643,4 +802,89 @@ small {
     --fs-paragraph: 1rem; /* 16px */
     --fs-small: 0.875rem; /* 14px */
   }
+}
+
+.blog-prose {
+  color: var(--medical-text-gray);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.blog-prose > * + * {
+  margin-top: 1.25rem;
+}
+
+.blog-prose h2,
+.blog-prose h3 {
+  scroll-margin-top: 7rem;
+  color: var(--medical-dark-text);
+}
+
+.blog-prose h2 {
+  margin-top: 3rem;
+  font-size: clamp(1.7rem, 1.4rem + 1vw, 2.3rem);
+}
+
+.blog-prose h3 {
+  margin-top: 2rem;
+  font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.6rem);
+}
+
+.blog-prose p,
+.blog-prose li {
+  color: var(--medical-text-gray);
+  font-size: 1rem;
+}
+
+.blog-prose ul,
+.blog-prose ol {
+  padding-left: 1.5rem;
+}
+
+.blog-prose li + li {
+  margin-top: 0.5rem;
+}
+
+.blog-prose a {
+  color: var(--text-link);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.blog-prose a:hover {
+  color: var(--text-link-hover);
+}
+
+.blog-prose img {
+  width: 100%;
+  border-radius: 1.5rem;
+}
+
+.blog-prose pre {
+  overflow-x: auto;
+  border: 1px solid var(--border-default);
+  border-radius: 1.5rem;
+  background: var(--secondary-color);
+  padding: 1rem 1.1rem;
+  color: var(--text-inverse);
+}
+
+.blog-prose code {
+  border-radius: 0.4rem;
+  background: var(--background-section-soft);
+  padding: 0.15rem 0.35rem;
+  font-size: 0.92em;
+}
+
+.blog-prose pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.blog-prose blockquote {
+  border-left: 4px solid var(--primary-color);
+  background: var(--medical-success-bg);
+  padding: 1rem 1.25rem;
+  color: var(--text-heading);
 }

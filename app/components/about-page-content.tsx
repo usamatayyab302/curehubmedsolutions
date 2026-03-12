@@ -134,7 +134,7 @@ const coreValues = [
 const expertise = [
   { title: "Medical Billing Services", href: "/services/medical-billing-services", icon: ClipboardCheck },
   { title: "Revenue Cycle Management", href: "/services/revenue-cycle-management", icon: TrendingUp },
-  { title: "Accounts Receivable Management", href: "/services/ar-collection-services", icon: WalletCards },
+  { title: "Accounts Receivable Management", href: "/services/accounts-receivable-collection", icon: WalletCards },
   { title: "Medical Coding Services", href: "/services", icon: BrainCircuit },
   { title: "Provider Credentialing", href: "/services/provider-credentialing", icon: LockKeyhole },
 ] as const;
@@ -249,8 +249,8 @@ export default function AboutPageContent() {
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
               >
                 <Image
-                  src="/images/team-doctors-standing-row.jpg"
-                  alt="Healthcare professionals team portrait"
+                  src="/images/healthcare-team-portrait.jpg"
+                  alt="Cure Hub Med Solutions team portrait for healthcare billing support"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 560px"
@@ -299,8 +299,8 @@ export default function AboutPageContent() {
             <div className="overflow-hidden rounded-3xl border border-primary/15 bg-background p-3 shadow-lg">
               <div className="relative h-[300px] overflow-hidden rounded-2xl sm:h-[420px]">
                 <Image
-                  src="/images/young-woman-doctor-gp-white-medical-uniform-consult-male-patient-private-hospital-female-therapist-speak-talk-with-man-client-consultation-clinic.jpg"
-                  alt="Healthcare consultation and billing support"
+                  src="/images/provider-patient-consultation-support.jpg"
+                  alt="Provider and patient consultation representing client-focused billing support"
                   fill
                   sizes="(max-width: 1024px) 100vw, 460px"
                   className="object-cover object-center"
@@ -465,8 +465,8 @@ export default function AboutPageContent() {
           <div className="order-1 overflow-hidden rounded-3xl border border-primary/15 bg-white p-3 shadow-lg lg:order-2 lg:sticky lg:top-24 lg:self-start">
             <div className="relative h-[300px] overflow-hidden rounded-2xl sm:h-[420px]">
               <Image
-                src="/images/looking-women-asian-stethoscope-medical-people.jpg"
-                alt="Medical billing and healthcare operations expertise"
+                src="/images/healthcare-billing-expertise-team.jpg"
+                alt="Healthcare billing expertise team supporting specialty practices"
                 fill
                 sizes="(max-width: 1024px) 100vw, 520px"
                 className="object-cover object-center"
@@ -522,8 +522,8 @@ export default function AboutPageContent() {
             <div className="overflow-hidden rounded-3xl border border-primary/15 bg-white p-3 shadow-lg">
               <div className="relative h-[280px] overflow-hidden rounded-2xl sm:h-[360px]">
                 <Image
-                  src="/images/serious-man-consulting-with-young-female-physician-doctor-checkup-meeting-hospital-skilled-general-practitioner-giving-healthcare-medical-advices-patient.jpg"
-                  alt="Healthcare impact through better billing operations"
+                  src="/images/provider-revenue-cycle-consultation.jpg"
+                  alt="Provider revenue cycle consultation focused on practice growth"
                   fill
                   sizes="(max-width: 1024px) 100vw, 520px"
                   className="object-cover object-center"

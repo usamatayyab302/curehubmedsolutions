@@ -59,8 +59,8 @@ export default function HeroSection() {
           <div className="overflow-hidden rounded-3xl border border-white/30 bg-white/10 p-3 shadow-xl backdrop-blur-sm">
             <div className="relative h-[320px] overflow-hidden rounded-2xl sm:h-[430px]">
               <Image
-                src="/images/professional-female-doctor-with-clipboard-standing-hospital-corridor.jpg"
-                alt="Medical billing support and FAQ assistance"
+                src="/images/healthcare-support-team-consultation.jpg"
+                alt="Healthcare support team available to answer billing and revenue cycle questions"
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 560px"

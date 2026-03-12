@@ -63,8 +63,8 @@ export const services: ServiceItem[] = [
     ],
   },
   {
-    title: "AR Collection Services",
-    href: "/services/ar-collection-services",
+    title: "Accounts Receivable Collection Services",
+    href: "/services/accounts-receivable-collection",
     summary:
       "Dedicated AR teams to pursue unpaid and underpaid claims and reduce aging receivables across payer classes.",
     benefits: [
@@ -130,7 +130,7 @@ export const services: ServiceItem[] = [
   },
   {
     title: "Provider Credentialing",
-    href: "/services/credentialing",
+    href: "/services/provider-credentialing",
     summary:
       "End-to-end credentialing and re-credentialing services to keep providers enrolled and billing-ready.",
     benefits: [

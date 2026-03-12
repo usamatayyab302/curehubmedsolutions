@@ -150,8 +150,8 @@ export default function ContactPageContent() {
             <div className="overflow-hidden rounded-3xl border border-white/30 bg-white/10 p-3 shadow-xl backdrop-blur-sm">
               <div className="relative h-[320px] overflow-hidden rounded-2xl sm:h-[430px]">
                 <Image
-                  src="/images/team-doctors-standing-together-hospital-premises.jpg"
-                  alt="Healthcare billing consultation team"
+                  src="/images/healthcare-billing-support-team.jpg"
+                  alt="Healthcare billing support team ready to assist provider organizations"
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 560px"
@@ -283,8 +283,8 @@ export default function ContactPageContent() {
             <div className="overflow-hidden rounded-3xl border border-primary/15 bg-background p-3 shadow-lg">
               <div className="relative h-[280px] overflow-hidden rounded-2xl sm:h-[360px]">
                 <Image
-                  src="/images/serious-man-consulting-with-young-female-physician-doctor-checkup-meeting-hospital-skilled-general-practitioner-giving-healthcare-medical-advices-patient.jpg"
-                  alt="Medical billing impact for healthcare practices"
+                  src="/images/healthcare-revenue-cycle-reporting-analysis.jpg"
+                  alt="Revenue cycle reporting review for improved practice performance"
                   fill
                   sizes="(max-width: 1024px) 100vw, 520px"
                   className="object-cover object-center"

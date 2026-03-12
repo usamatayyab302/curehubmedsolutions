@@ -9,8 +9,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-medical-white hover:bg-primary-dark",
-        secondary: "bg-accent text-medical-white hover:bg-secondary-button-hover",
+        default: "btn-primary border border-transparent",
+        secondary: "btn-secondary border border-transparent",
         outline:
           "border border-primary/30 bg-transparent text-primary hover:border-primary hover:bg-primary/10",
         ghost: "text-heading hover:bg-primary/10 hover:text-primary",

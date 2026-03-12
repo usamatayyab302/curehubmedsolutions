@@ -28,13 +28,25 @@ import {
   Users,
   WalletCards,
   Quote,
+  CalendarDays,
+  Clock3,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import ConsultationForm from "@/components/forms/ConsultationForm";
 import IntegrationLogoCarousel from "@/components/integration-logo-carousel";
+
+type LatestPost = {
+  title: string;
+  description: string;
+  date: string;
+  slug: string;
+  image: string;
+  category: string;
+  readingTime: string;
+};
 
 const trustIndicators = [
   "Faster Reimbursements",
@@ -90,14 +102,54 @@ const serviceCardBackgrounds = [
 ];
 
 const specialties = [
-  { title: "Chiropractic", icon: Bone, tone: "primary" },
-  { title: "Mental Health", icon: BrainCircuit, tone: "teal" },
-  { title: "Nephrology", icon: Activity, tone: "accent" },
-  { title: "Personal Injury", icon: ShieldCheck, tone: "primary" },
-  { title: "Pediatric", icon: UserRound, tone: "teal" },
-  { title: "Multi-Specialty", icon: Stethoscope, tone: "accent" },
-  { title: "Hospital", icon: Building2, tone: "primary" },
-  { title: "Family Practice", icon: Users, tone: "teal" },
+  {
+    title: "Chiropractic",
+    icon: Bone,
+    tone: "primary",
+    href: "/specialties/chiropractic-billing-services",
+  },
+  {
+    title: "Mental Health",
+    icon: BrainCircuit,
+    tone: "teal",
+    href: "/specialties/mental-health-billing-services",
+  },
+  {
+    title: "Nephrology",
+    icon: Activity,
+    tone: "accent",
+    href: "/specialties/nephrology-billing",
+  },
+  {
+    title: "Personal Injury",
+    icon: ShieldCheck,
+    tone: "primary",
+    href: "/specialties/personal-injury-billing",
+  },
+  {
+    title: "Pediatric",
+    icon: UserRound,
+    tone: "teal",
+    href: "/specialties/pediatrics-billing",
+  },
+  {
+    title: "Multi-Specialty",
+    icon: Stethoscope,
+    tone: "accent",
+    href: "/specialties/multi-specialty-billing",
+  },
+  {
+    title: "Hospital",
+    icon: Building2,
+    tone: "primary",
+    href: "/specialties/hospital-billing-services",
+  },
+  {
+    title: "Family Practice",
+    icon: Users,
+    tone: "teal",
+    href: "/specialties/family-medicine-billing",
+  },
 ] as const;
 
 const performanceMetrics = [
@@ -329,9 +381,18 @@ const faqItems = [
 ] as const;
 
 const heroBackgroundImages = [
-  "/images/team-doctors-standing-row.jpg",
-  "/images/smiling-medical-team-standing-together-hospital-corridor.jpg",
-  "/images/multicultural-doctors-on-reception.webp",
+  {
+    src: "/images/healthcare-team-portrait.jpg",
+    alt: "Healthcare team portrait representing trusted medical billing support",
+  },
+  {
+    src: "/images/medical-practice-support-team.jpg",
+    alt: "Medical practice support team in a hospital corridor",
+  },
+  {
+    src: "/images/healthcare-provider-reception-team.webp",
+    alt: "Healthcare reception team coordinating front-office and billing operations",
+  },
 ];
 
 const containerVariants: Variants = {
@@ -441,7 +502,11 @@ function AnimatedCounter({
   );
 }
 
-export default function HomePageContent() {
+export default function HomePageContent({
+  latestPosts = [],
+}: {
+  latestPosts?: LatestPost[];
+}) {
   const [activeHeroBg, setActiveHeroBg] = useState(0);
   const [isMobileHero, setIsMobileHero] = useState(false);
   const performanceRef = useRef<HTMLElement | null>(null);
@@ -489,8 +554,8 @@ export default function HomePageContent() {
           {isMobileHero ? (
             <div className="absolute inset-0">
               <Image
-                src={heroBackgroundImages[0]}
-                alt="Healthcare medical billing background visual"
+                src={heroBackgroundImages[0].src}
+                alt={heroBackgroundImages[0].alt}
                 fill
                 priority
                 sizes="100vw"
@@ -500,7 +565,7 @@ export default function HomePageContent() {
           ) : (
             <AnimatePresence mode="wait">
               <motion.div
-                key={heroBackgroundImages[activeHeroBg]}
+                key={heroBackgroundImages[activeHeroBg].src}
                 className="absolute inset-0"
                 initial={{ opacity: 0, scale: 1.02, x: "5%" }}
                 animate={{ opacity: 1, scale: 1.12, x: "-5%" }}
@@ -508,8 +573,8 @@ export default function HomePageContent() {
                 transition={{ duration: 5.1, ease: "easeInOut" }}
               >
                 <Image
-                  src={heroBackgroundImages[activeHeroBg]}
-                  alt="Healthcare medical billing background visual"
+                  src={heroBackgroundImages[activeHeroBg].src}
+                  alt={heroBackgroundImages[activeHeroBg].alt}
                   fill
                   priority
                   sizes="100vw"
@@ -700,8 +765,8 @@ export default function HomePageContent() {
               <div className="mx-auto w-full max-w-[560px] overflow-hidden rounded-3xl border border-primary/20 bg-medical-white p-2 shadow-lg shadow-primary/10 sm:p-3">
                 <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-medical-very-light-bg">
                   <Image
-                    src="/images/experienced-doctor-discussing-with-patient-his-private-medical-file-young-man-checking-up-with-his-md-consulting-about-way-his-health-treatment-health-insurance.jpg"
-                    alt="Healthcare team consultation for medical billing workflow"
+                    src="/images/medical-billing-specialist-reviewing-claims.jpg"
+                    alt="Medical billing specialist reviewing claims and reimbursement paperwork"
                     fill
                     sizes="(max-width: 1024px) 100vw, 560px"
                     className="object-cover object-center"
@@ -789,24 +854,29 @@ export default function HomePageContent() {
               const toneClasses = getSpecialtyToneClasses(item.tone);
 
               return (
-                <motion.article
+                <motion.div
                   key={item.title}
                   variants={serviceItemVariants}
                   whileHover={{ y: -6 }}
                   whileTap={{ y: -2, scale: 0.99 }}
-                  className={`group flex min-h-[190px] flex-col items-center justify-center rounded-2xl border border-medical-white/25 bg-medical-white/95 p-5 text-center shadow-sm transition-[transform,background-color,color,box-shadow,border-color] duration-300 hover:border-transparent hover:shadow-xl hover:shadow-primary/25 active:border-transparent active:shadow-lg active:shadow-primary/25 ${toneClasses.hoverCard}`}
+                  className="h-full"
                 >
-                  <motion.span
-                    whileHover={{ scale: 1.06 }}
-                    whileTap={{ scale: 1.04 }}
-                    className={`inline-flex h-12 w-12 items-center justify-center rounded-xl ${toneClasses.iconWrap} transition-colors duration-300 ${toneClasses.hoverIcon}`}
+                  <Link
+                    href={item.href}
+                    className={`group flex min-h-[190px] h-full flex-col items-center justify-center rounded-2xl border border-medical-white/25 bg-medical-white/95 p-5 text-center shadow-sm transition-[transform,background-color,color,box-shadow,border-color] duration-300 hover:border-transparent hover:shadow-xl hover:shadow-primary/25 active:border-transparent active:shadow-lg active:shadow-primary/25 ${toneClasses.hoverCard}`}
                   >
-                    <Icon className="h-5 w-5" />
-                  </motion.span>
-                  <h3 className="mt-4 font-heading text-lg font-semibold text-heading transition-colors duration-300 group-hover:text-medical-text-white group-active:text-medical-text-white">
-                    {item.title}
-                  </h3>
-                </motion.article>
+                    <motion.span
+                      whileHover={{ scale: 1.06 }}
+                      whileTap={{ scale: 1.04 }}
+                      className={`inline-flex h-12 w-12 items-center justify-center rounded-xl ${toneClasses.iconWrap} transition-colors duration-300 ${toneClasses.hoverIcon}`}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </motion.span>
+                    <h3 className="mt-4 font-heading text-lg font-semibold text-heading transition-colors duration-300 group-hover:text-medical-text-white group-active:text-medical-text-white">
+                      {item.title}
+                    </h3>
+                  </Link>
+                </motion.div>
               );
             })}
           </motion.div>
@@ -968,8 +1038,8 @@ export default function HomePageContent() {
             <div className="overflow-hidden rounded-3xl border border-primary/15 bg-medical-white p-3 shadow-lg shadow-primary/10">
               <div className="relative h-[420px] w-full overflow-hidden rounded-2xl bg-medical-very-light-bg sm:h-[500px] lg:h-[560px]">
                 <Image
-                  src="/images/pexels-tima-miroshnichenko-5452189.jpg"
-                  alt="Healthcare revenue performance analytics dashboard"
+                  src="/images/healthcare-revenue-cycle-reporting-analysis.jpg"
+                  alt="Revenue cycle analyst reviewing billing performance reports for a healthcare practice"
                   fill
                   sizes="(max-width: 1024px) 100vw, 420px"
                   className="object-cover object-center"
@@ -999,8 +1069,8 @@ export default function HomePageContent() {
             >
               <div className="relative h-[320px] w-full overflow-hidden rounded-2xl bg-medical-very-light-bg sm:h-[380px] lg:h-[460px]">
                 <Image
-                  src="/images/smiling-medical-team-standing-together-hospital-corridor.jpg"
-                  alt="Medical billing professionals supporting healthcare practice operations"
+                  src="/images/medical-practice-support-team.jpg"
+                  alt="Healthcare support team standing together for practice operations and billing coordination"
                   fill
                   sizes="(max-width: 1024px) 100vw, 560px"
                   className="object-cover object-center"
@@ -1084,34 +1154,25 @@ export default function HomePageContent() {
         </div>
       </section>
 
-      <section
-        id="why-choose-us"
-        className="border-t border-primary/10 bg-medical-white px-4 py-14 sm:px-6 lg:px-8 lg:py-16"
-      >
-        <div className="mx-auto max-w-7xl">
-          <div className="grid items-start gap-7 lg:grid-cols-[0.88fr_1.12fr]">
-            <motion.div
-              variants={serviceContainerVariants}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.15 }}
-              className="min-w-0 lg:sticky lg:top-24 lg:self-start"
-            >
-              <motion.div
-                variants={serviceItemVariants}
-                className="overflow-hidden rounded-3xl border border-primary/15 bg-medical-white p-3 shadow-lg shadow-primary/10"
-              >
-                <div className="relative h-[290px] overflow-hidden rounded-2xl sm:h-[340px]">
-                  <Image
-                    src="/images/adult-beard-smiling-staff-main-professional.jpg"
-                    alt="Healthcare office team supporting billing operations"
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 500px"
-                    className="object-cover object-center"
-                  />
+        <section
+          id="why-choose-us"
+          className="relative border-t border-primary/10 bg-medical-white px-4 py-14 sm:px-6 lg:px-8 lg:py-16"
+        >
+          <div className="mx-auto max-w-7xl">
+            <div className="grid items-start gap-7 lg:grid-cols-[0.88fr_1.12fr]">
+              <div className="min-w-0 lg:sticky lg:top-28 lg:h-fit lg:self-start">
+                <div className="overflow-hidden rounded-3xl border border-primary/15 bg-medical-white p-3 shadow-lg shadow-primary/10">
+                  <div className="relative h-[290px] overflow-hidden rounded-2xl sm:h-[340px] lg:h-[460px]">
+                    <Image
+                      src="/images/healthcare-operations-strategy-meeting.jpg"
+                      alt="Healthcare operations team collaborating on workflow, compliance, and billing strategy"
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 500px"
+                      className="object-cover object-center"
+                    />
+                  </div>
                 </div>
-              </motion.div>
-            </motion.div>
+              </div>
 
             <motion.div
               variants={serviceContainerVariants}
@@ -1233,8 +1294,8 @@ export default function HomePageContent() {
               >
                 <div className="relative h-[330px] overflow-hidden rounded-2xl sm:h-[420px] lg:h-[560px]">
                   <Image
-                    src="/images/pexels-tima-miroshnichenko-5452209.jpg"
-                    alt="Healthcare billing process workflow discussion"
+                    src="/images/digital-patient-intake-and-billing-workflow.jpg"
+                    alt="Digital patient intake workflow supporting accurate medical billing and claims submission"
                     fill
                     sizes="(max-width: 1024px) 100vw, 520px"
                     className="object-cover object-center"
@@ -1386,6 +1447,92 @@ export default function HomePageContent() {
       </section>
 
       <section
+        id="latest-posts"
+        className="border-t border-primary/10 bg-medical-very-light-bg px-4 py-14 sm:px-6 lg:px-8 lg:py-16"
+      >
+        <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="m-0 text-xs font-semibold uppercase tracking-[0.12em] text-primary">
+              Latest Posts
+            </p>
+            <h2 className="mt-3 font-heading text-3xl font-bold leading-tight text-heading sm:text-4xl">
+              Latest Articles
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-muted-text sm:text-base">
+              Explore the latest insights on medical billing, revenue cycle management, and
+              healthcare operations.
+            </p>
+          </div>
+
+          <motion.div
+            variants={serviceContainerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
+          >
+            {latestPosts.map((post) => (
+              <motion.article key={post.slug} variants={serviceItemVariants} whileHover={{ y: -6 }}>
+                <Card className="group h-full overflow-hidden border-primary/10 transition-[transform,box-shadow] duration-300 hover:shadow-xl hover:shadow-primary/10">
+                  <Link href={`/blog/${post.slug}`} className="block">
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        fill
+                        sizes="(min-width: 1280px) 25vw, (min-width: 768px) 40vw, 100vw"
+                        className="object-cover transition duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  </Link>
+                  <CardContent className="p-6">
+                    <Badge className="mb-3">{post.category}</Badge>
+                    <Link href={`/blog/${post.slug}`} className="block">
+                      <h3 className="text-xl font-semibold text-heading transition-colors group-hover:text-primary">
+                        {post.title}
+                      </h3>
+                    </Link>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-text">{post.description}</p>
+                    <div className="mt-4 flex flex-wrap gap-3 text-xs text-muted-text">
+                      <span className="inline-flex items-center gap-1.5">
+                        <CalendarDays className="h-3.5 w-3.5" />
+                        {new Date(post.date).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </span>
+                      <span className="inline-flex items-center gap-1.5">
+                        <Clock3 className="h-3.5 w-3.5" />
+                        {post.readingTime}
+                      </span>
+                    </div>
+                    <div className="mt-5">
+                      <Button asChild variant="outline" size="sm">
+                        <Link href={`/blog/${post.slug}`}>
+                          Read Article
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.article>
+            ))}
+          </motion.div>
+
+          <div className="mt-8 flex justify-center">
+            <Button asChild size="sm">
+              <Link href="/blog">
+                View All Posts
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section
         id="faq"
         className="border-t border-primary/10 bg-medical-white px-4 py-14 sm:px-6 lg:px-8 lg:py-16"
       >
@@ -1491,8 +1638,8 @@ export default function HomePageContent() {
             >
               <div className="relative h-[210px] overflow-hidden rounded-2xl">
                 <Image
-                  src="/images/young-woman-doctor-gp-white-medical-uniform-consult-male-patient-private-hospital-female-therapist-speak-talk-with-man-client-consultation-clinic.jpg"
-                  alt="Healthcare consultation support for medical billing"
+                  src="/images/provider-patient-consultation-support.jpg"
+                  alt="Provider consultation with a patient during care coordination and billing support"
                   fill
                   sizes="(max-width: 1024px) 100vw, 560px"
                   className="object-cover object-center"
