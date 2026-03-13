@@ -33,6 +33,11 @@ export type Post = PostSummary & {
   headings: TableOfContentsItem[];
 };
 
+type PostFileEntry = PostSummary & {
+  content: string;
+  filePath: string;
+};
+
 type CategorySummary = {
   name: string;
   slug: string;
@@ -66,40 +71,51 @@ function parsePostFile(filePath: string): PostSummary & { content: string } {
   };
 }
 
-export const getAllPosts = cache(() => {
+const getPostFileEntries = cache(() => {
   if (!fs.existsSync(POSTS_DIRECTORY)) {
-    return [] as PostSummary[];
+    return [] as PostFileEntry[];
   }
 
   return fs
     .readdirSync(POSTS_DIRECTORY)
     .filter((fileName) => fileName.endsWith(".md"))
     .map((fileName) => {
-      const { content, ...parsed } = parsePostFile(path.join(POSTS_DIRECTORY, fileName));
-      void content;
+      const filePath = path.join(POSTS_DIRECTORY, fileName);
 
       return {
-        ...parsed,
-      } satisfies PostSummary;
+        ...parsePostFile(filePath),
+        filePath,
+      } satisfies PostFileEntry;
     })
-    .sort((left, right) => new Date(right.date).getTime() - new Date(left.date).getTime())
-    ;
+    .sort((left, right) => new Date(right.date).getTime() - new Date(left.date).getTime());
+});
+
+export const getAllPosts = cache(() => {
+  return getPostFileEntries().map(({ content, filePath, ...parsed }) => {
+    void content;
+    void filePath;
+
+    return {
+      ...parsed,
+    } satisfies PostSummary;
+  });
 });
 
 export const getPostSlugs = cache(() => getAllPosts().map((post) => post.slug));
 
 export const getPostBySlug = cache(async (slug: string) => {
-  const filePath = path.join(POSTS_DIRECTORY, `${slug}.md`);
+  const post = getPostFileEntries().find((entry) => entry.slug === slug);
 
-  if (!fs.existsSync(filePath)) {
+  if (!post) {
     return null;
   }
 
-  const post = parsePostFile(filePath);
   const rendered = await renderMarkdown(post.content);
+  const { filePath, ...postData } = post;
+  void filePath;
 
   return {
-    ...post,
+    ...postData,
     html: rendered.html,
     headings: rendered.headings,
   } satisfies Post;

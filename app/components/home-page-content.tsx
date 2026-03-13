@@ -54,6 +54,27 @@ const trustIndicators = [
   "HIPAA-Compliant Processes",
 ];
 
+const heroSnapshotMetrics = [
+  {
+    title: "Clean Claim Rate",
+    value: "98.2%",
+    context: "+4.1% last 90 days",
+    mobileLabel: "Clean claims",
+  },
+  {
+    title: "Days in A/R",
+    value: "33",
+    context: "-9 day improvement",
+    mobileLabel: "Days in A/R",
+  },
+  {
+    title: "Claim Turnaround",
+    value: "24h",
+    context: "Same-day billing cadence",
+    mobileLabel: "Turnaround",
+  },
+] as const;
+
 const services = [
   {
     title: "Medical Billing Services",
@@ -601,129 +622,174 @@ export default function HomePageContent({
           />
         </div>
 
-        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 md:py-20 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:py-24">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-          className="max-w-xl rounded-3xl bg-black/15 p-4 backdrop-blur-[1px] sm:p-5 lg:p-6"
-        >
-          <motion.div variants={itemVariants}>
-            <Badge className="rounded-full border border-medical-white/30 bg-medical-white/15 px-3.5 py-1 text-[10px] uppercase tracking-[0.12em] text-medical-text-white sm:px-4 sm:text-[11px]">
-              U.S. Healthcare Revenue Cycle Experts
-            </Badge>
-          </motion.div>
-
-          <motion.h1
-            variants={itemVariants}
-            className="mt-5 font-heading text-[1.9rem] font-bold leading-[1.1] tracking-tight text-[#F9FAFB] sm:text-[2.25rem] md:text-[2.55rem] lg:text-[2.9rem]"
+        <div className="relative z-10 mx-auto grid min-h-[calc(100svh-6rem)] max-w-7xl items-center gap-5 px-4 py-6 sm:min-h-[calc(100svh-5.5rem)] sm:px-6 sm:py-8 md:grid-cols-[minmax(0,1.16fr)_minmax(0,0.84fr)] md:gap-8 md:py-10 lg:min-h-[calc(100svh-5rem)] lg:gap-10 lg:px-8 lg:py-10 xl:py-12">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="max-w-2xl rounded-3xl bg-black/15 p-4 backdrop-blur-[1px] sm:p-5 lg:p-6"
           >
-            <span className="block">Medical Billing Services</span>
-            <span className="block">That Help U.S.</span>
-            <span className="block">Healthcare Practices</span>
-            <span className="block">
-              <span className="hero-heading-type">Grow Revenue</span>
-            </span>
-          </motion.h1>
-
-          <motion.p variants={itemVariants} className="mt-5 text-sm leading-relaxed text-medical-text-on-dark sm:text-base">
-            Cure Hub Med Solutions delivers Medical Billing Services and Revenue Cycle Management
-            for U.S. healthcare providers who want cleaner claims, faster reimbursements, and less
-            administrative burden.
-          </motion.p>
-
-          <motion.p variants={itemVariants} className="mt-4 text-sm leading-relaxed text-medical-text-on-dark sm:text-base">
-            Our billing specialists align coding, claim submission, and payer follow-up workflows
-            so your team can focus on patient care while we optimize collections and financial
-            performance.
-          </motion.p>
-
-          <motion.div variants={itemVariants} className="mt-7 flex flex-wrap gap-3">
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-              <Button asChild size="lg" className="h-11 text-sm shadow-lg shadow-primary/20 sm:h-12 sm:text-base">
-                <Link href="/contact-us">
-                  Schedule a Free Consultation
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+            <motion.div variants={itemVariants}>
+              <Badge className="rounded-full border border-medical-white/30 bg-medical-white/15 px-3 py-1 text-[10px] uppercase tracking-[0.12em] text-medical-text-white sm:px-4 sm:text-[11px]">
+                U.S. Healthcare Revenue Cycle Experts
+              </Badge>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="h-11 border-medical-white/45 bg-medical-white/12 text-medical-text-white hover:bg-medical-white/22 hover:text-medical-text-white sm:h-12 sm:text-base"
-              >
-                <Link href="/about-us">Learn More</Link>
-              </Button>
-            </motion.div>
-          </motion.div>
 
-          <motion.ul variants={itemVariants} className="mt-7 grid gap-2 sm:grid-cols-3">
-            {trustIndicators.map((item) => (
+            <motion.h1
+              variants={itemVariants}
+              className="mt-4 font-heading text-[1.8rem] font-bold leading-[1.06] tracking-tight text-[#F9FAFB] sm:text-[2.2rem] md:text-[2.45rem] xl:text-[2.8rem]"
+            >
+              <span className="block">Medical Billing Services</span>
+              <span className="block">That Help U.S. Practices</span>
+              <span className="block">
+                <span className="hero-heading-type">Grow Revenue</span>
+              </span>
+            </motion.h1>
+
+            <motion.p
+              variants={itemVariants}
+              className="mt-4 max-w-xl text-sm leading-relaxed text-medical-text-on-dark sm:text-[15px] md:text-base"
+            >
+              Cure Hub Med Solutions manages coding, claim submission, and payer follow-up for
+              U.S. healthcare providers that want cleaner claims, faster reimbursements, and less
+              administrative overhead.
+            </motion.p>
+
+            <motion.ul variants={itemVariants} className="mt-5 flex flex-wrap gap-2">
+              {trustIndicators.map((item) => (
                 <li
                   key={item}
-                  className="flex items-center gap-2 rounded-lg border border-medical-white/25 bg-medical-white/12 px-3 py-2 text-sm text-medical-text-white shadow-sm backdrop-blur-sm"
+                  className="flex items-center gap-2 rounded-full border border-medical-white/25 bg-medical-white/12 px-3 py-2 text-xs text-medical-text-white shadow-sm backdrop-blur-sm sm:text-sm"
                 >
                   <CheckCircle2 className="h-4 w-4 shrink-0 text-medical-text-white" />
                   {item}
                 </li>
-            ))}
-          </motion.ul>
-        </motion.div>
+              ))}
+            </motion.ul>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease: "easeOut", delay: 0.1 }}
-          className="relative"
-        >
+            <motion.div variants={itemVariants} className="mt-5 flex flex-wrap gap-3">
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                <Button asChild size="lg" className="h-10 text-sm shadow-lg shadow-primary/20 sm:h-11 sm:text-base">
+                  <Link href="/contact-us">
+                    Schedule a Free Consultation
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="h-10 border-medical-white/45 bg-medical-white/12 text-medical-text-white hover:bg-medical-white/22 hover:text-medical-text-white sm:h-11 sm:text-base"
+                >
+                  <Link href="/about-us">Learn More</Link>
+                </Button>
+              </motion.div>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="mt-5 grid grid-cols-3 gap-2 md:hidden">
+              {heroSnapshotMetrics.map((metric) => (
+                <div
+                  key={metric.title}
+                  className="rounded-2xl border border-medical-white/25 bg-medical-white/12 px-3 py-3 text-center shadow-sm backdrop-blur-sm"
+                >
+                  <p className="m-0 text-base font-bold text-medical-text-white">{metric.value}</p>
+                  <p className="m-0 mt-1 text-[10px] uppercase tracking-[0.08em] text-medical-text-on-dark">
+                    {metric.mobileLabel}
+                  </p>
+                </div>
+              ))}
+            </motion.div>
+          </motion.div>
+
           <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, ease: "easeOut", delay: 0.1 }}
+            className="relative hidden md:justify-self-end md:block"
           >
-            <Card className="relative overflow-hidden rounded-3xl border-medical-white/30 bg-medical-white/12 p-6 shadow-xl shadow-primary-dark/25 backdrop-blur-md sm:p-7">
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-medical-light-blue to-teal" />
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Card className="relative w-full max-w-[22.5rem] overflow-hidden rounded-3xl border-medical-white/30 bg-medical-white/12 p-3.5 shadow-xl shadow-primary-dark/25 backdrop-blur-md lg:max-w-[24rem] lg:p-4">
+                <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-medical-light-blue to-teal" />
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="rounded-xl border border-medical-white/25 bg-medical-white/14 p-4">
-                  <p className="m-0 text-xs uppercase tracking-[0.1em] text-medical-text-on-dark">Clean Claim Rate</p>
-                  <p className="m-0 mt-2 text-2xl font-bold text-medical-text-white">98.2%</p>
-                  <p className="m-0 mt-1 text-xs text-medical-text-on-dark">+4.1% last 90 days</p>
+                <div className="flex items-start justify-between gap-2.5">
+                  <div>
+                    <p className="m-0 text-xs uppercase tracking-[0.1em] text-medical-text-on-dark">
+                      Live Revenue Snapshot
+                    </p>
+                    <p className="m-0 mt-1.5 max-w-[13rem] text-[15px] font-semibold leading-snug text-medical-text-white lg:text-base">
+                      Billing operations built for faster collections and cleaner claims.
+                    </p>
+                  </div>
+                  <Badge className="border-medical-white/25 bg-medical-white/12 px-2.5 py-1 text-[9px] uppercase tracking-[0.1em] text-medical-text-white">
+                    HIPAA Ready
+                  </Badge>
                 </div>
-                <div className="rounded-xl border border-medical-white/25 bg-medical-white/14 p-4">
-                  <p className="m-0 text-xs uppercase tracking-[0.1em] text-medical-text-on-dark">Days in A/R</p>
-                  <p className="m-0 mt-2 text-2xl font-bold text-medical-text-white">33</p>
-                  <p className="m-0 mt-1 text-xs text-medical-text-on-dark">-9 day improvement</p>
-                </div>
-              </div>
 
-              <div className="mt-4 rounded-xl border border-medical-white/20 bg-medical-white/12 p-4">
-                <p className="m-0 text-xs uppercase tracking-[0.1em] text-medical-text-on-dark">Revenue Trend</p>
-                <div className="mt-3 flex items-end gap-2">
-                  {[42, 55, 48, 62, 70, 76].map((height, idx) => (
+                <div className="mt-4 grid gap-2.5 xl:grid-cols-2">
+                  {heroSnapshotMetrics.slice(0, 2).map((metric) => (
                     <div
-                      key={idx}
-                      className="w-7 rounded-t-md bg-gradient-to-t from-primary to-teal"
-                      style={{ height }}
-                    />
+                      key={metric.title}
+                      className="rounded-2xl border border-medical-white/25 bg-medical-white/14 p-3"
+                    >
+                      <p className="m-0 text-xs uppercase tracking-[0.1em] text-medical-text-on-dark">
+                        {metric.title}
+                      </p>
+                      <p className="m-0 mt-1.5 text-lg font-bold text-medical-text-white">{metric.value}</p>
+                      <p className="m-0 mt-1 text-xs text-medical-text-on-dark">{metric.context}</p>
+                    </div>
                   ))}
                 </div>
-                <p className="m-0 mt-3 flex items-center gap-1 text-xs font-medium text-medical-text-white">
-                  <TrendingUp className="h-3.5 w-3.5" />
-                  Faster reimbursements with stronger claim quality.
-                </p>
-              </div>
 
-              <div className="mt-4 flex items-center gap-3 rounded-xl border border-medical-white/20 bg-medical-white/10 p-3">
-                <ShieldCheck className="h-5 w-5 text-medical-text-white" />
-                <p className="m-0 text-sm font-medium text-medical-text-white">
-                  HIPAA-aligned workflows and payer-compliant billing operations.
-                </p>
-              </div>
-            </Card>
+                <div className="mt-2.5 flex items-start gap-2.5 rounded-2xl border border-medical-white/20 bg-medical-white/10 p-3">
+                  <Clock3 className="mt-0.5 h-4 w-4 shrink-0 text-medical-text-white" />
+                  <div>
+                    <p className="m-0 text-xs uppercase tracking-[0.1em] text-medical-text-on-dark">
+                      {heroSnapshotMetrics[2].title}
+                    </p>
+                    <p className="m-0 mt-1 text-[15px] font-semibold text-medical-text-white">
+                      {heroSnapshotMetrics[2].value}
+                    </p>
+                    <p className="m-0 mt-1 text-xs text-medical-text-on-dark">
+                      {heroSnapshotMetrics[2].context}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-3 rounded-2xl border border-medical-white/20 bg-medical-white/12 p-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="m-0 text-xs uppercase tracking-[0.1em] text-medical-text-on-dark">
+                      Revenue Trend
+                    </p>
+                    <p className="m-0 flex items-center gap-1 text-xs font-medium text-medical-text-white">
+                      <TrendingUp className="h-3.5 w-3.5" />
+                      Faster reimbursements
+                    </p>
+                  </div>
+                  <div className="mt-2.5 flex items-end gap-1.5">
+                    {[24, 32, 28, 38, 42, 46].map((height, idx) => (
+                      <div
+                        key={idx}
+                        className="flex-1 rounded-t-md bg-gradient-to-t from-primary to-teal"
+                        style={{ height }}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-3 flex items-center gap-2.5 rounded-2xl border border-medical-white/20 bg-medical-white/10 p-2.5">
+                  <ShieldCheck className="h-4 w-4 text-medical-text-white" />
+                  <p className="m-0 text-xs font-medium leading-relaxed text-medical-text-white">
+                    HIPAA-aligned workflows and payer-compliant billing operations.
+                  </p>
+                </div>
+              </Card>
+            </motion.div>
           </motion.div>
-        </motion.div>
         </div>
       </section>
 

@@ -40,7 +40,7 @@ export default function BlogHero(props: BlogHeroProps) {
           <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-white md:text-5xl">
             {props.title}
           </h1>
-          <p className="mt-4 max-w-3xl text-base text-white/85 md:text-lg">{props.subtitle}</p>
+          <p className="mt-4 max-w-3xl text-base text-white md:text-lg">{props.subtitle}</p>
 
           {isPost ? (
             <>

@@ -96,7 +96,7 @@
   --text-muted: var(--neutral-500);
   --text-subtle: var(--neutral-400);
   --text-inverse: var(--white-color);
-  --text-on-dark: rgba(255, 255, 255, 0.84);
+  --text-on-dark: var(--white-color);
   --text-link: var(--primary-dark);
   --text-link-hover: var(--secondary-color);
 

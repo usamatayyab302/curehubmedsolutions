@@ -42,6 +42,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const { page: rawPage, q } = await searchParams;
   const page = Number(rawPage ?? "1");
   const filteredPosts = filterPosts({ query: q });
+  const articleCount = filteredPosts.length;
   const featuredPosts = getFeaturedPosts(filteredPosts, 2);
   const { posts, currentPage, totalPages } = paginatePosts(
     filteredPosts,
@@ -64,13 +65,17 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             <div className="flex items-end justify-between gap-4">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
-                  All Articles
+                  {articleCount === 1 ? "Published Article" : "All Articles"}
                 </p>
                 <h2 className="mt-2 text-3xl font-semibold text-heading">
-                  Practical guidance for healthcare growth
+                  {articleCount === 1
+                    ? "Current healthcare revenue cycle guide"
+                    : "Practical guidance for healthcare growth"}
                 </h2>
               </div>
-              <p className="text-sm text-muted-text">{filteredPosts.length} articles</p>
+              <p className="text-sm text-muted-text">
+                {articleCount} article{articleCount === 1 ? "" : "s"}
+              </p>
             </div>
 
             <BlogGrid posts={posts} />

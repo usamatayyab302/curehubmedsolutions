@@ -23,12 +23,11 @@ export default function RichArticleContent({
     }
 
     content.push(
-      <MotionReveal key={`html-${revealIndex}`} delay={Math.min(revealIndex * 0.04, 0.18)}>
-        <div
-          className="blog-prose max-w-none"
-          dangerouslySetInnerHTML={{ __html: segment }}
-        />
-      </MotionReveal>
+      <div
+        key={`html-${revealIndex}`}
+        className="blog-prose max-w-none"
+        dangerouslySetInnerHTML={{ __html: segment }}
+      />
     );
     revealIndex += 1;
   }
@@ -44,7 +43,12 @@ export default function RichArticleContent({
     if (slot) {
       appendHtmlBlock(html.slice(lastIndex, markerStart));
       content.push(
-        <MotionReveal key={`slot-${revealIndex}`} delay={Math.min(revealIndex * 0.04, 0.18)}>
+        <MotionReveal
+          key={`slot-${revealIndex}`}
+          delay={Math.min(revealIndex * 0.04, 0.18)}
+          amount={0.08}
+          y={18}
+        >
           {slot}
         </MotionReveal>
       );

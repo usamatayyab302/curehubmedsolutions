@@ -36,7 +36,7 @@ export default function CTASection({
         <h2 className="mt-4 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
           {title}
         </h2>
-        <p className="mt-4 max-w-3xl text-sm leading-8 text-medical-text-white/85 sm:text-base">
+        <p className="mt-4 max-w-3xl text-sm leading-8 text-medical-text-white sm:text-base">
           {description}
         </p>
 

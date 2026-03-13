@@ -5,7 +5,12 @@ import { notFound } from "next/navigation";
 import AuthorBox from "@/components/AuthorBox";
 import BlogHero from "@/components/BlogHero";
 import BlogPostSidebar from "@/components/BlogPostSidebar";
-import { createMedicalBillingGuideSlots } from "@/components/MedicalBillingGuideBlocks";
+import {
+  createClaimDenialsGuideSlots,
+  createMedicalBillingGuideSlots,
+  createOutsourcingBillingGuideSlots,
+  createRcmGuideSlots,
+} from "@/components/MedicalBillingGuideBlocks";
 import ReadingProgress from "@/components/ReadingProgress";
 import RelatedArticlesSection from "@/components/RelatedArticlesSection";
 import RichArticleContent from "@/components/RichArticleContent";
@@ -93,11 +98,50 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const postImage = post.image.startsWith("http") ? post.image : `${getSiteUrl()}${post.image}`;
   const metaDescription = post.seoDescription ?? post.description;
   const latestPosts = getLatestPosts(4, post.slug);
+  const sidebarLatestPosts = latestPosts.length < 4 ? getLatestPosts(4) : latestPosts;
   const relatedPosts = getRelatedPosts(post, 3);
   const articleSlots =
     post.slug === "complete-guide-to-medical-billing"
       ? createMedicalBillingGuideSlots()
-      : {};
+      : post.slug === "top-reasons-for-medical-claim-denials"
+        ? createClaimDenialsGuideSlots()
+        : post.slug === "how-revenue-cycle-management-improves-healthcare-profitability"
+          ? createRcmGuideSlots()
+        : post.slug === "benefits-of-outsourcing-medical-billing"
+          ? createOutsourcingBillingGuideSlots()
+        : {};
+  const sidebarCta =
+    post.slug === "top-reasons-for-medical-claim-denials"
+      ? {
+          title: "Reduce Claim Denials in Your Practice",
+          description:
+            "Connect with Cure Hub Med Solutions to improve denial prevention, streamline appeals, and recover revenue with focused denial management support.",
+          primaryHref: "/contact-us",
+          primaryLabel: "Schedule Consultation",
+          secondaryHref: "/services/denial-management",
+          secondaryLabel: "View Denial Management Services",
+        }
+      : post.slug === "how-revenue-cycle-management-improves-healthcare-profitability"
+        ? {
+            title: "Optimize Your Revenue Cycle",
+            description:
+              "Work with Cure Hub Med Solutions to improve billing operations, speed reimbursements, and strengthen financial performance across the revenue cycle.",
+            primaryHref: "/contact-us",
+            primaryLabel: "Schedule Consultation",
+            secondaryHref: "/services/revenue-cycle-management",
+            secondaryLabel: "Explore RCM Services",
+          }
+      : post.slug === "benefits-of-outsourcing-medical-billing"
+        ? {
+            title: "Outsource Your Medical Billing Today",
+            description:
+              "Partner with Cure Hub Med Solutions to improve billing accuracy, speed reimbursements, and strengthen revenue cycle performance with professional medical billing support.",
+            primaryHref: "/contact-us",
+            primaryLabel: "Schedule Consultation",
+            secondaryHref: "/services/medical-billing-services",
+            secondaryLabel: "Explore Medical Billing Services",
+          }
+      : undefined;
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -150,14 +194,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="mt-10 grid gap-10 xl:grid-cols-[minmax(0,1fr)_320px]">
           <main className="min-w-0">
             <MotionReveal>
-              <TableOfContents items={post.headings} sticky={false} />
+              <TableOfContents items={post.headings} sticky />
             </MotionReveal>
 
-            <MotionReveal className="mt-8 rounded-[2rem] border border-primary/10 bg-white/96 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.06)] sm:p-8 lg:p-10">
+            <div className="mt-8 rounded-[2rem] border border-primary/10 bg-white/96 p-6 shadow-[0_20px_70px_rgba(15,23,42,0.06)] sm:p-8 lg:p-10">
               <article>
                 <RichArticleContent html={post.html} slots={articleSlots} />
               </article>
-            </MotionReveal>
+            </div>
 
             <MotionReveal className="mt-8">
               <AuthorBox
@@ -173,7 +217,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </main>
 
           <aside className="xl:sticky xl:top-24 xl:self-start">
-            <BlogPostSidebar latestPosts={latestPosts} title={post.title} url={postUrl} />
+            <BlogPostSidebar
+              latestPosts={sidebarLatestPosts}
+              title={post.title}
+              url={postUrl}
+              cta={sidebarCta}
+            />
           </aside>
         </div>
       </div>

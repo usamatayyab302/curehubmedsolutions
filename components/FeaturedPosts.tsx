@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import type { PostSummary } from "@/lib/posts";
+import { cn } from "@/lib/utils";
 
 export default function FeaturedPosts({ posts }: { posts: PostSummary[] }) {
   if (posts.length === 0) {
@@ -15,13 +16,17 @@ export default function FeaturedPosts({ posts }: { posts: PostSummary[] }) {
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">
-            Featured Posts
+            {posts.length === 1 ? "Featured Article" : "Featured Posts"}
           </p>
-          <h2 className="mt-2 text-3xl font-semibold text-heading">Editor’s picks for revenue teams</h2>
+          <h2 className="mt-2 text-3xl font-semibold text-heading">
+            {posts.length === 1
+              ? "Current guide for healthcare revenue teams"
+              : "Editor's picks for revenue teams"}
+          </h2>
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className={cn("grid gap-6", posts.length > 1 && "lg:grid-cols-2")}>
         {posts.map((post) => (
           <Card
             key={post.slug}
@@ -38,9 +43,11 @@ export default function FeaturedPosts({ posts }: { posts: PostSummary[] }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/15 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6">
-                  <Badge className="mb-3 bg-white text-primary hover:bg-white">{post.category}</Badge>
+                  <Badge className="mb-3 bg-white text-primary hover:bg-white">
+                    {post.category}
+                  </Badge>
                   <h3 className="max-w-xl text-2xl font-semibold text-white">{post.title}</h3>
-                  <p className="mt-2 max-w-xl text-sm text-white/80">{post.description}</p>
+                  <p className="mt-2 max-w-xl text-sm text-white">{post.description}</p>
                 </div>
               </div>
             </Link>
